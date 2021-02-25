@@ -335,8 +335,7 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 				<div class="request__form">
 					<h3 class="request__title"><?php echo get_field('page_request_title'); ?></h3>
 					<p class="request__desc"><?php echo get_field('page_request_desc'); ?></p>
-					
-                    <form id="form1r">
+					<form id="form1r">
 						<div class="request__checkbox">
 							<label for="check__apartment" class="request__label_chek">
 								<span class="check__wrap active">
@@ -393,8 +392,8 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 							<a href="tel:<?php echo $strMts; ?>" onclick="return gtag_report_conversion('tel:<?php echo $strMts; ?>');" class="request__office_tel show__office"><?php echo $mtsFull; ?></a>
 						</div>
 					</form>
-     
-					<button id="request__submit" class="hidden__office" onclick="return gtag_report_conversion('Form');">Отправить</button>
+					<!--<button id="request__submit" class="hidden__office" onclick="return gtag_report_conversion('Form');">Отправить</button>-->
+					<button id="request__submit" class="hidden__office">Отправить</button>
 					<div class="req__ok all__ok"><?php echo get_field('sent_ok__page_form'); ?></div>
 				</div>
 			</div>
@@ -461,8 +460,7 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 	<div id="popup__request_wrap">
 		<h4 class="popup__req__title"><?php echo get_field('popup__request_title');  ?></h4>
 		<p class="popup__req_desc">Оставляйте заявку на подключение интересующих Вас услуг онлайн</p>
-		
-        <form id="form3r">
+		<form id="form3r">
 			<div class="request__checkbox">
 				<input type="hidden" name="region__request" id="region_request">
 				<label for="request_apart" class="request__label_chek">
@@ -503,7 +501,6 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 				<a href="tel:<?php echo $strMts; ?>" onclick="return gtag_report_conversion('tel:<?php echo $strMts; ?>');" class="popup__request_telephone hidden__popup_office"><?php echo $mtsFull; ?></a>
 			</div>
 		</form>
-  
 		<button id="popup__request_submit" class="hidden__popup_apart" onclick="return gtag_report_conversion('Request');">Отправить</button>
 		<div class="popup_req__ok all__ok"><?php echo get_field('sent_ok__popreq'); ?></div>
 	</div>
@@ -523,8 +520,7 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 <div class="hidden__popup">
 	<div id="popup__consult_wrap">
 		<h4 class="popup__consult_title"><?php echo get_field('popup_consultation'); ?></h4>
-		
-        <form id="form2r">
+		<form id="form2r">
 			<div class="request__checkbox">
 				<input type="hidden" name="region__consult" id="region_consult">
 				<label for="popup__consapart">
@@ -568,8 +564,8 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 			<p class="popup__consult_start_desc hidden__consul_apart"><?php echo get_field('page_request_office');  ?></p>
 			<a href="tel:<?php echo $strMts; ?>" onclick="return gtag_report_conversion('tel:<?php echo $strMts; ?>');" class="popup__consult_telephone hidden__consul_apart"><?php echo $mtsFull; ?></a>
 		</form>
-  
-		<button id="popup__consult_submit" class="hidden__consul_office" onclick="return gtag_report_conversion('Consultation');">Отправить</button>
+		<!--<button id="popup__consult_submit" class="hidden__consul_office" onclick="return gtag_report_conversion('Consultation');">Отправить</button>-->
+		<button id="popup__consult_submit" class="hidden__consul_office">Отправить</button>
 		<div class="consult__ok all__ok"><?php echo get_field('sent_ok__consult'); ?></div>
 	</div>
 </div>
@@ -585,6 +581,9 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 <script src="https://api-maps.yandex.ru/2.1/?apikey=252ddaca-a6db-4d30-94ae-460a80828cc8&lang=ru_RU" type="text/javascript"></script>
 
 <script type="text/javascript">
+
+    console.log('start js!!!');
+
 function isEmpty(str){ return(!str||0===str.length);}
 
 //function addCities(){
@@ -950,8 +949,144 @@ var coordin='';navigator.geolocation.getCurrentPosition(position=>{var lat=posit
 	function init(){var o,e;ymaps.geocode([lat,long]).then(function(t){var e=t.geoObjects.toArray();o=e[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[3].name},function(t){}),ymaps.geolocation.get({provider:"yandex",mapStateAutoApply:!0}).then(function(t){e=t.geoObjects.get(0).properties._data.name,finalAdd(e,o,isGetLocation)})}listCity(isGetLocation,"starting"),ymaps.ready(init),!0===isE(isGetLocation)&&$.magnificPopup.open({items:{src:"#popup__select_city"},type:"inline"},0);
 });*/
 
+    console.log('test js2!!!');
 
-for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){var a=e[t].getAttribute("data-bg");e[t].style.backgroundImage="url("+a+")"}var r=window.navigator.userAgent.match(/Firefox\/([0-9]+)\./),n=r?parseInt(r[1]):0;if(canUseWebp()||65<=n)for(var o=document.querySelectorAll("[data-bg-webp]"),t=0;t<o.length;t++){var g=o[t].getAttribute("data-bg-webp");o[t].style.backgroundImage="url("+g+")"}};$(document).ready(function(){$(".all__ok").css("display","flex").hide(),$(".check__wrap").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".check__wrap").removeClass("active"),$(".check__wrap input").removeAttr("checked"),"check__apartment_name"==(e=$(this).children("input").attr("name"))&&($(".hidden__office").fadeIn(100),$(".show__office").fadeOut(100)),"check__office_name"==e&&($(".hidden__office").fadeOut(100),$(".show__office").fadeIn(100)),$(this).find("input").attr("checked","checked"),$(this).addClass("active"))});$(".check__request").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".check__request").removeClass("active"),$(".check__request input").removeAttr("checked"),"request__apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__popup_apart").fadeIn(100),$(".hidden__popup_office").fadeOut(100)),"request__office"==e&&($(".hidden__popup_apart").fadeOut(100),$(".hidden__popup_office").fadeIn(100)),$(this).find("input").attr("checked","checked"),$(this).addClass("active"))});$(".request__label_cons").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".request__label_cons").removeClass("active"),$(".request__label_cons input").removeAttr("checked"),"popup__cons_apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__consul_apart").fadeOut(100),$(".hidden__consul_office").fadeIn(100),$(".hidden__consul_other").fadeIn(100)),"popup__cons_office"!=e&&"popup__cons_other"!=e||($(".hidden__consul_apart").fadeIn(100),$(".hidden__consul_office").fadeOut(100),$(".hidden__consul_other").fadeOut(100)),$(this).find("input").attr("checked","checked"),$(this).addClass("active"))}),$(".tmr__button").click(function(){$("html, body").animate({scrollTop:$(".tariff__zero_element").offset().top},{duration:10,easing:"linear"})});$("body").on("click",".location__grid_row",function(){-1==$(this).attr("class").indexOf("active")?($(".location__grid_row").removeClass("active"),$(this).addClass("active")):$(this).removeClass("active")}),$(".hidden__location").css("display","flex").hide(),$(".header__info_location").click(function(){$(".hidden__location").fadeIn(),$(".location__close").click(function(){$(".hidden__location").fadeOut()})});$("body").on("click",".header__menu_ul li a",function(i){i.preventDefault(),$(".header__menu_ul li a").removeClass("active");var t=$(this).attr("tab");$(".tariff__wrap").removeClass("active"),$(t).addClass("active"),$(this).addClass("active"),$("html, body").animate({scrollTop:$(t).offset().top},{duration:10,easing:"linear"})}),$("body").on("click",".tariff__add_check",function(){-1==$(this).attr("class").indexOf("active")?($(this).addClass("active"),$(this).parent().next(".tariff__price_with_wifi").css("display","flex")):($(this).removeClass("active"),$(this).parent().next(".tariff__price_with_wifi").css("display","none"))}),$(".button__request").magnificPopup(),$("body").on("click",".tariff__connect",function(i){i.preventDefault();var t=$(this).attr("href");$.magnificPopup.open({items:{src:t},type:"inline"},0)}),$(".first__call").click(function(i){i.preventDefault(),$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})}),$("body").on("click",".tariff__more",function(i){i.preventDefault();var t=$(this).attr("href");$.magnificPopup.open({items:{src:t},type:"inline"},0),$("#popup__features_button_connect").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__request_wrap")},type:"inline"})},10)})});$(".header__info_support,.button__expert").click(function(){$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),$(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})});$(function(){<?php $stDate=get_field('timer_date');$exDate=explode('.',$stDate);?>var ts=new Date(<?php echo$exDate[0];?>, <?php $outEx=(int)$exDate[1];$outEx=$outEx-1;echo$outEx;?>,<?php echo $exDate[2];?>);new Date>ts&&(ts=new Date(2020,7,20).getTime()+864e6,newYear=!1),$(".tmr__main_wrap").countdown({timestamp:ts,callback:function(t,r,_,m){var a=""+t,e=""+r,n=""+_,s=""+m;1==a.length&&(a="0"+a),1==e.length&&(e="0"+e),1==n.length&&(n="0"+n),1==s.length&&(s="0"+s),$(".tmr__seconds_wrap .tmr__numbers span").eq(0).html(s.charAt(0)),$(".tmr__seconds_wrap .tmr__numbers span").eq(1).html(s.charAt(1)),$(".tmr__minutes_wrap .tmr__numbers span").eq(0).html(n.charAt(0)),$(".tmr__minutes_wrap .tmr__numbers span").eq(1).html(n.charAt(1)),$(".tmr__hour_wrap .tmr__numbers span").eq(0).html(e.charAt(0)),$(".tmr__hour_wrap .tmr__numbers span").eq(1).html(e.charAt(1)),$(".tmr__day_wrap .tmr__numbers span").eq(0).html(a.charAt(0)),$(".tmr__day_wrap .tmr__numbers span").eq(1).html(a.charAt(1))}})});$.mask.definitions['9'] = false;$.mask.definitions['9'] = '[9]';$.mask.definitions['5'] = "[0-9]";$("#request_phone,#popup__consultphone,#popup__reqphone").mask("+7(955) 555-55-55");function keyInput(n){var t=$("#input_find").attr("value"),i=window.outerWidth,o={action:"action_naming",name:"",cityaction:n,width:i,find:t,_ajax_nonce:'<?php echo wp_create_nonce('my_ajax_nonce');?>'};$.ajax({method:"POST",url:'<?php echo admin_url('admin-ajax.php');?>',data:o,dataType:"json",success:function(t){/*console.log(t),*/null==t.keycode?($(".location__grid").html(" "),$(".location__grid").html(t.parent)):($(".location__grid").html(" "),"keyup"==n?$(".location__grid").html(t.keycode):$(".location__grid").html(t.parent))}})}$("body").on("keyup touchend","#input_find",function(e){13===e.keyCode&&(e.preventDefault(),keyInput("find")),keyInput("keyup")}),$("body").on("click",".find__icon",function(){keyInput("find")});var htmlAll,ww=$(window).outerWidth();ww<1199&&($(".header__menu_wrap").css("display","flex").hide(),$(".header__mobile_menu").click(function(){1==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","37vw"),$(".header__menu_wrap").addClass("isone")),5==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","80vw"),$(".header__menu_wrap").addClass("isfive")),6==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","93vw"),$(".header__menu_wrap").addClass("issix")),2==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","50vw"),$(".header__menu_wrap").addClass("istwo")),3==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","60vw"),$(".header__menu_wrap").addClass("isthree")),4==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","72.8vw"),$(".header__menu_wrap").addClass("isfour")),$(".header__menu_wrap").show(),$(".header__menu_mobile_close").click(function(){$(".header__menu_wrap").fadeOut(),$(".header__menu_wrap").removeClass("isfour isone istwo isthree isfive issix")}),$(".header__menu_ul li a").click(function(e){e.preventDefault(),$(".header__menu_ul li a").removeClass("active");var _=$(this).attr("tab");$(".tariff__wrap").removeClass("active"),$(_).addClass("active"),$(this).addClass("active"),$(".header__menu_wrap").fadeOut(),$("html, body").animate({scrollTop:$(_).offset().top},{duration:10,easing:"linear"})}),$(".header__info_support__mobile").click(function(){$(".header__menu_wrap").fadeOut(),$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),$(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})})}),htmlAll="",$(".location__grid_column").each(function(){var e=$(this).html();htmlAll+=e}),$(".location__grid_column").remove(),$(".location__grid").append(htmlAll),$(".location__grid_row").click(function(){-1==$(this).attr("class").indexOf("active")?($(".location__grid_row").removeClass("active"),$(this).addClass("active")):$(this).removeClass("active")}),$("#popup__consuladdress,#popup__reqaddress").attr("placeholder","Адрес"));$("#request__submit").click(function(){$('.request__form').addClass('active');var t=document.location.protocol+"//"+document.location.host,e=$(".header__info__location__title").html();$("#region_page").attr("value",e);var o=$("#form1r").serialize();/*console.log(o),*/$.ajax({method:"POST",url:t+"/wp-content/themes/red/mail1r.php?action=mail1r",data:o,dataType:"json",success:function(t){$('.request__form').removeClass('active');var e;/*console.log(t),*/"error"==t.status&&(e=t.description,$("#form1r input[type=text]").removeClass("error_input"),e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),"success"==t.status&&($("input[type=text]").attr("value",""),$(".req__ok").show(),setTimeout(function(){$(".req__ok").fadeOut()},2e3))}})}),$("#popup__consult_submit").click(function(){$('#popup__consult_wrap').addClass('active');var t=document.location.protocol+"//"+document.location.host,e=$(".header__info__location__title").html();$("#region_consult").attr("value",e);var o=$("#form2r").serialize();/*console.log(o),*/$.ajax({method:"POST",url:t+"/wp-content/themes/red/mail2r.php?action=mail2r",data:o,dataType:"json",success:function(t){$('#popup__consult_wrap').removeClass('active');var e;/*console.log(t),*/"error"==t.status&&(e=t.description,$("input[type=text]").parent("label").removeClass("error_input"),e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),"success"==t.status&&($("input[type=text]").attr("value",""),$(".consult__ok").show(),setTimeout(function(){$(".consult__ok").fadeOut()},2e3))}})}),$("body").on("click",".tariff__connect",function(){var t=$(this).parent(".tariff__grid_column").children(".tariff__grid_title").html();$("#popup__reqconnect").attr("value",t)}),$("#popup__request_submit").click(function(){$('#popup__request_wrap').addClass('active');var t=document.location.protocol+"//"+document.location.host,e=$(".header__info__location__title").html();$("#region_request").attr("value",e);var o=$("#form3r").serialize();/*console.log(o),*/$.ajax({method:"POST",url:t+"/wp-content/themes/red/mail3r.php?action=mail3r",data:o,dataType:"json",success:function(t){$('#popup__request_wrap').removeClass('active');var e;/*console.log(t),*/"error"==t.status&&(e=t.description,$("input[type=text]").parent("label").removeClass("error_input"),e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),"success"==t.status&&($("input[type=text]").attr("value",""),$(".popup_req__ok").show(),setTimeout(function(){$(".popup_req__ok").fadeOut()},2e3))}})});
+for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
+    var a=e[t].getAttribute("data-bg");
+    e[t].style.backgroundImage="url("+a+")"}var r=window.navigator.userAgent.match(/Firefox\/([0-9]+)\./),n=r?parseInt(r[1]):0;
+    if(canUseWebp()||65<=n)for(var o=document.querySelectorAll("[data-bg-webp]"),t=0;t<o.length;t++){var g=o[t].getAttribute("data-bg-webp");
+        o[t].style.backgroundImage="url("+g+")"}};
+    $(document).ready(function(){$(".all__ok").css("display","flex").hide(),
+        $(".check__wrap").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".check__wrap").removeClass("active"),
+            $(".check__wrap input").removeAttr("checked"),"check__apartment_name"==(e=$(this).children("input").attr("name"))&&($(".hidden__office").fadeIn(100),$(".show__office").fadeOut(100)),"check__office_name"==e&&($(".hidden__office").fadeOut(100),$(".show__office").fadeIn(100)),
+            $(this).find("input").attr("checked","checked"),
+            $(this).addClass("active"))});
+    $(".check__request").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".check__request").removeClass("active"),
+        $(".check__request input").removeAttr("checked"),"request__apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__popup_apart").fadeIn(100),
+        $(".hidden__popup_office").fadeOut(100)),"request__office"==e&&($(".hidden__popup_apart").fadeOut(100),
+        $(".hidden__popup_office").fadeIn(100)),$(this).find("input").attr("checked","checked"),
+        $(this).addClass("active"))});
+    $(".request__label_cons").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".request__label_cons").removeClass("active"),
+        $(".request__label_cons input").removeAttr("checked"),"popup__cons_apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__consul_apart").fadeOut(100),
+        $(".hidden__consul_office").fadeIn(100),
+        $(".hidden__consul_other").fadeIn(100)),"popup__cons_office"!=e&&"popup__cons_other"!=e||($(".hidden__consul_apart").fadeIn(100),
+        $(".hidden__consul_office").fadeOut(100),$(".hidden__consul_other").fadeOut(100)),
+        $(this).find("input").attr("checked","checked"),
+        $(this).addClass("active"))}),
+        $(".tmr__button").click(function(){$("html, body").animate({scrollTop:$(".tariff__zero_element").offset().top},{duration:10,easing:"linear"})});
+        $("body").on("click",".location__grid_row",function(){-1==$(this).attr("class").indexOf("active")?($(".location__grid_row").removeClass("active"),
+            $(this).addClass("active")):$(this).removeClass("active")}),
+            $(".hidden__location").css("display","flex").hide(),
+            $(".header__info_location").click(function(){$(".hidden__location").fadeIn(),
+                $(".location__close").click(function(){$(".hidden__location").fadeOut()})});
+        $("body").on("click",".header__menu_ul li a",function(i){i.preventDefault(),
+            $(".header__menu_ul li a").removeClass("active");var t=$(this).attr("tab");
+            $(".tariff__wrap").removeClass("active"),
+                $(t).addClass("active"),$(this).addClass("active"),
+                $("html, body").animate({scrollTop:$(t).offset().top},{duration:10,easing:"linear"})}),
+            $("body").on("click",".tariff__add_check",function(){-1==$(this).attr("class").indexOf("active")?($(this).addClass("active"),
+                $(this).parent().next(".tariff__price_with_wifi").css("display","flex")):($(this).removeClass("active"),
+                $(this).parent().next(".tariff__price_with_wifi").css("display","none"))}),
+            $(".button__request").magnificPopup(),
+            $("body").on("click",".tariff__connect",function(i){i.preventDefault();var t=$(this).attr("href");
+            $.magnificPopup.open({items:{src:t},type:"inline"},0)}),
+            $(".first__call").click(function(i){i.preventDefault(),
+                $.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),
+                $(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})}),
+            $("body").on("click",".tariff__more",function(i){i.preventDefault();var t=$(this).attr("href");
+            $.magnificPopup.open({items:{src:t},type:"inline"},0),
+                $("#popup__features_button_connect").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__request_wrap")},type:"inline"})},10)})});
+        $(".header__info_support,.button__expert").click(function(){$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),
+            $(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})});
+        $(function(){<?php $stDate=get_field('timer_date');$exDate=explode('.',$stDate);?>var ts=new Date(<?php echo$exDate[0];?>, <?php $outEx=(int)$exDate[1];$outEx=$outEx-1;echo$outEx;?>,<?php echo $exDate[2];?>);new Date>ts&&(ts=new Date(2020,7,20).getTime()+864e6,newYear=!1),$(".tmr__main_wrap").countdown({timestamp:ts,callback:function(t,r,_,m){var a=""+t,e=""+r,n=""+_,s=""+m;1==a.length&&(a="0"+a),1==e.length&&(e="0"+e),1==n.length&&(n="0"+n),1==s.length&&(s="0"+s),$(".tmr__seconds_wrap .tmr__numbers span").eq(0).html(s.charAt(0)),$(".tmr__seconds_wrap .tmr__numbers span").eq(1).html(s.charAt(1)),$(".tmr__minutes_wrap .tmr__numbers span").eq(0).html(n.charAt(0)),$(".tmr__minutes_wrap .tmr__numbers span").eq(1).html(n.charAt(1)),$(".tmr__hour_wrap .tmr__numbers span").eq(0).html(e.charAt(0)),$(".tmr__hour_wrap .tmr__numbers span").eq(1).html(e.charAt(1)),$(".tmr__day_wrap .tmr__numbers span").eq(0).html(a.charAt(0)),$(".tmr__day_wrap .tmr__numbers span").eq(1).html(a.charAt(1))}})});$.mask.definitions['9'] = false;$.mask.definitions['9'] = '[9]';
+        $.mask.definitions['5'] = "[0-9]";
+        $("#request_phone,#popup__consultphone,#popup__reqphone").mask("+7(955) 555-55-55");function keyInput(n){var t=$("#input_find").attr("value"),i=window.outerWidth,o={action:"action_naming",name:"",cityaction:n,width:i,find:t,_ajax_nonce:'<?php echo wp_create_nonce('my_ajax_nonce');?>'};
+        $.ajax({method:"POST",url:'<?php echo admin_url('admin-ajax.php');?>',data:o,dataType:"json",success:function(t){/*console.log(t),*/null==t.keycode?($(".location__grid").html(" "),$(".location__grid").html(t.parent)):($(".location__grid").html(" "),"keyup"==n?$(".location__grid").html(t.keycode):$(".location__grid").html(t.parent))}})}$("body").on("keyup touchend","#input_find",function(e){13===e.keyCode&&(e.preventDefault(),keyInput("find")),keyInput("keyup")}),$("body").on("click",".find__icon",function(){keyInput("find")});
+        var htmlAll,ww=$(window).outerWidth();ww<1199&&($(".header__menu_wrap").css("display","flex").hide(),$(".header__mobile_menu").click(function(){1==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","37vw"),$(".header__menu_wrap").addClass("isone")),5==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","80vw"),$(".header__menu_wrap").addClass("isfive")),6==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","93vw"),$(".header__menu_wrap").addClass("issix")),2==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","50vw"),$(".header__menu_wrap").addClass("istwo")),3==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","60vw"),$(".header__menu_wrap").addClass("isthree")),4==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","72.8vw"),$(".header__menu_wrap").addClass("isfour")),$(".header__menu_wrap").show(),$(".header__menu_mobile_close").click(function(){$(".header__menu_wrap").fadeOut(),$(".header__menu_wrap").removeClass("isfour isone istwo isthree isfive issix")}),$(".header__menu_ul li a").click(function(e){e.preventDefault(),$(".header__menu_ul li a").removeClass("active");var _=$(this).attr("tab");$(".tariff__wrap").removeClass("active"),$(_).addClass("active"),$(this).addClass("active"),$(".header__menu_wrap").fadeOut(),$("html, body").animate({scrollTop:$(_).offset().top},{duration:10,easing:"linear"})}),$(".header__info_support__mobile").click(function(){$(".header__menu_wrap").fadeOut(),$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),$(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})})}),htmlAll="",$(".location__grid_column").each(function(){var e=$(this).html();
+        htmlAll+=e}),$(".location__grid_column").remove(),$(".location__grid").append(htmlAll),$(".location__grid_row").click(function(){-1==$(this).attr("class").indexOf("active")?($(".location__grid_row").removeClass("active"),$(this).addClass("active")):$(this).removeClass("active")}),$("#popup__consuladdress,#popup__reqaddress").attr("placeholder","Адрес"));
+        
+        $("#request__submit").click(function(){
+
+            console.log('Click request__submit!!!');
+            
+            $('.request__form').addClass('active');
+            var t=document.location.protocol+"//"+document.location.host,
+                e=$(".header__info__location__title").html();
+        $("#region_page").attr("value",e);
+        var o=$("#form1r").serialize();
+        /*console.log(o),*/
+            $.ajax({
+                method:"POST",
+                url:t+"/wp-content/themes/red/mail1r.php?action=mail1r",
+                data:o,
+                dataType:"json",
+                success:function(t){
+
+                    console.log('request__submit success!!!');
+                    
+                    $('.request__form').removeClass('active');
+                    var e;
+                    /*console.log(t),*/
+                    "error"==t.status&&(e=t.description,
+                        $("#form1r input[type=text]").removeClass("error_input"),
+                        e.forEach(function(t,e,o){
+                            $("[name="+t+"]").parent("label").addClass("error_input")})),
+                            "success"==t.status&&($("input[type=text]").attr("value",""),
+                        $(".req__ok").show(),
+                        setTimeout(function(){$(".req__ok").fadeOut()},2e3))
+                }
+            })
+        }),
+            
+            $("#popup__consult_submit").click(function(){
+
+                console.log('popup__consult_submit click!!!');
+                
+                $('#popup__consult_wrap').addClass('active');
+                var t=document.location.protocol+"//"+document.location.host,
+                    e=$(".header__info__location__title").html();
+                $("#region_consult").attr("value",e);
+                var o=$("#form2r").serialize();
+                /*console.log(o),*/
+                $.ajax({
+                    method:"POST",
+                    url:t+"/wp-content/themes/red/mail2r.php?action=mail2r",
+                    data:o,dataType:"json",
+                    success:function(t){
+
+                        console.log('popup__consult_submit success!!!');
+                        
+                        $('#popup__consult_wrap').removeClass('active');
+                        var e;
+                        /*console.log(t),*/
+                        "error"==t.status&&(e=t.description,$("input[type=text]").parent("label").removeClass("error_input"),
+                            e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),"success"==t.status&&($("input[type=text]").attr("value",""),
+                            $(".consult__ok").show(),
+                            setTimeout(function(){
+                                $(".consult__ok").fadeOut()},2e3))
+                    }
+                })
+            }),
+            
+            $("body").on("click",".tariff__connect",function(){var t=$(this).parent(".tariff__grid_column").children(".tariff__grid_title").html();
+            $("#popup__reqconnect").attr("value",t)}),$("#popup__request_submit").click(function(){
+                $('#popup__request_wrap').addClass('active');
+                var t=document.location.protocol+"//"+document.location.host,
+                    e=$(".header__info__location__title").html();
+                $("#region_request").attr("value",e);
+                var o=$("#form3r").serialize();
+                /*console.log(o),*/
+            $.ajax({method:"POST",url:t+"/wp-content/themes/red/mail3r.php?action=mail3r",
+                data:o,
+                dataType:"json",
+                success:function(t){
+                $('#popup__request_wrap').removeClass('active');
+                var e;
+                /*console.log(t),*/
+                    "error"==t.status&&(e=t.description,$("input[type=text]").parent("label").removeClass("error_input"),
+                        e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),"success"==t.status&&($("input[type=text]").attr("value",""),
+                        $(".popup_req__ok").show(),
+                        setTimeout(function(){$(".popup_req__ok").fadeOut()},2e3))}})});
 });
 	var isget=document.querySelectorAll(".header__info_location .header__info__location__title")[0].getAttribute("tab-city");
 	listCity(isget,'starting');
