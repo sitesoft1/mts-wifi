@@ -1,4 +1,4 @@
-<?php /* Template name: Home */ session_start();
+<?php /* Template name: Home */
 
 session_start();
 
@@ -68,6 +68,12 @@ if(empty($_SESSION['currentParam']) && $currentParam != 'my_site')
 
 if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
     $_SESSION['currentParam'] = $old_session;
+}
+
+if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
+    $_SESSION['currentParam'] = $config['direct'];
+}elseif(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '120'){
+    $_SESSION['currentParam'] = $config['adwords'];
 }
 ?>
 <!DOCTYPE html>
@@ -170,8 +176,18 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 							<?php $field_term_id = get_term_by('slug',$utmcity,'area');  ?>
 							<span class="header__info__location__title" tab="<?php echo $ip; ?>" tab-city="<?php echo $utmcity; ?>" tab-region="<?php print_r($field_term_id->parent); ?>" tab-section="<?php echo $utmsection = $_GET['section']; ?>"></span>
 						</a>
-						<?php $is_phone = get_field('is_phone',get_the_ID());
-						$nunumb_phone= preg_replace('/[^0-9]/', '', $is_phone);	?>
+						<?php
+                        
+                            if($_SESSION['currentParam'] == 'direct'){
+                                $is_phone = get_field('is_phone', get_the_ID());
+                            }elseif($_SESSION['currentParam'] == 'adwords'){
+                                $is_phone = get_field('is_phone_google', get_the_ID());
+                            }else{
+                                $is_phone = get_field('is_phone', get_the_ID());
+                            }
+                            
+                            $nunumb_phone= preg_replace('/[^0-9]/', '', $is_phone);
+						?>
 						<a href="tel: <?php echo $nunumb_phone; ?>" class="header__info_connect" onclick="return gtag_report_conversion('tel:<?php echo $nunumb_phone; ?>');">Бесплатный звонок</a>
 						<a id="header__info_lk"></a>
 					</div>
@@ -386,8 +402,21 @@ if(!isset($_SESSION['currentParam']) || empty($_SESSION['currentParam'])){
 							<span class="request__description hidden__office"><?php echo get_field('page_request_warning_fields'); ?></span>
 							<a href="<?php echo get_privacy_policy_url(); ?>" target="_blank" class="request__privacy hidden__office"><?php echo get_field('page_request_privacy'); ?></a>
 							<div class="request__text_office show__office"><?php echo get_field('page_request__ooffice'); ?></div>
-							<?php $ourFull = get_field('is_phone'); $strOur = preg_replace('/[^0-9]/', '', $ourFull); $nOur = substr($strOur, 1); 
-								$mtsFull = get_field('phone_is_mts'); $strMts = preg_replace('/[^0-9]/', '', $mtsFull); $nMts = substr($strMts, 1);
+							<?php
+                            
+                            if($_SESSION['currentParam'] == 'direct'){
+                                $ourFull = get_field('is_phone');
+                            }elseif($_SESSION['currentParam'] == 'adwords'){
+                                $ourFull = get_field('is_phone_google');
+                            }else{
+                                $ourFull = get_field('is_phone');
+                            }
+                                    $strOur = preg_replace('/[^0-9]/', '', $ourFull);
+                                    $nOur = substr($strOur, 1);
+                                    
+                                    $mtsFull = get_field('phone_is_mts');
+                                    $strMts = preg_replace('/[^0-9]/', '', $mtsFull);
+                                    $nMts = substr($strMts, 1);
 							?>
 							<a href="tel:<?php echo $strMts; ?>" onclick="return gtag_report_conversion('tel:<?php echo $strMts; ?>');" class="request__office_tel show__office"><?php echo $mtsFull; ?></a>
 						</div>
