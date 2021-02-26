@@ -2,6 +2,9 @@
 
 session_start();
 
+//zakomentit
+//$_SERVER['REMOTE_ADDR'] = '87.236.16.123';
+
 if(isset($_SESSION['currentParam']) && !empty($_SESSION['currentParam'])){
     $old_session = $_SESSION['currentParam'];
     unset($_SESSION['currentParam']);
@@ -103,9 +106,15 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 	
 	<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/app.min.css">
 <?php
+/*
 	$client  = @$_SERVER['HTTP_CLIENT_IP'];
 	$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
 	$remote  = @$_SERVER['REMOTE_ADDR'];
+*/
+
+    $client  = '87.236.16.123';
+    $forward = '87.236.16.123';
+    $remote  = '87.236.16.123';
 	 
 	if(filter_var($client, FILTER_VALIDATE_IP)) $ip = $client;
 	elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
@@ -166,7 +175,7 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 						</a>
 						<a class="header__info_location">
 							<span class="header__info__location__icon"></span>
-							<?php $field_term_id = get_term_by('slug',$utmcity,'area');  ?>
+							<?php $field_term_id = get_term_by('slug', $utmcity, 'area');  ?>
 							<span class="header__info__location__title" tab="<?php echo $ip; ?>" tab-city="<?php echo $utmcity; ?>" tab-region="<?php print_r($field_term_id->parent); ?>" tab-section="<?php echo $utmsection = $_GET['section']; ?>"></span>
 						</a>
 						<?php
@@ -656,7 +665,12 @@ function listCity(nameCity, acti){
 	});
 }
 
+
 function addContent(geotag){
+    
+    //console.log(geotag);
+    /*
+    
 	var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 	var data = {
 		action: 'action_name',
@@ -706,7 +720,11 @@ function addContent(geotag){
 			
 		}
 	});
+	
+	*/
 }
+
+
 
 function parseCities(text, tab){
 	var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
@@ -769,12 +787,26 @@ function initGeolocation(){
 	    navigator.geolocation.getCurrentPosition(position => {
 			var lat = position.coords.latitude;
 			var long = position.coords.longitude;
+
+            //ZAKOMENTIT
+			var lat = 64.564239;//second
+            var long = 39.831502;//first
+			console.log('lat:'+lat+' long:'+long);
+			
 			var myGeocoder = ymaps.geocode([lat,long]);
 			myGeocoder.then(
 			    function (res) {
 			        // Выведем в консоль данные, полученные в результате геокодирования объекта.
 					var objs = res.geoObjects.toArray();
-					geoIpCity = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[3].name;
+					geoIpCity = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[4].name;
+                    console.log(geoIpCity);
+
+                    var geoProvince = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[2].name;
+                    console.log(geoProvince);
+					
+					var geoTest = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components;
+                    console.log(geoTest);
+                    
 					addContent(geoIpCity);
 					listCity(geoIpCity,'starting');
 					setTimeout(function(){ questionsShow(); },1000);
