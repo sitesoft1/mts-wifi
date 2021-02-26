@@ -106,16 +106,11 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 	
 	<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/app.min.css">
 <?php
-/*
+
 	$client  = @$_SERVER['HTTP_CLIENT_IP'];
 	$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
 	$remote  = @$_SERVER['REMOTE_ADDR'];
-*/
-
-    $client  = '87.236.16.123';
-    $forward = '87.236.16.123';
-    $remote  = '87.236.16.123';
-	 
+	
 	if(filter_var($client, FILTER_VALIDATE_IP)) $ip = $client;
 	elseif(filter_var($forward, FILTER_VALIDATE_IP)) $ip = $forward;
 	else $ip = $remote;
@@ -369,6 +364,9 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 						</div>
 						<div id="request__apart">
 							<input type="hidden" name="region__page" id="region_page">
+                            <input type="hidden" name="region__id" class="region_id">
+                            <input type="hidden" name="region__name" class="region_name">
+                            <input type="hidden" name="region__city" class="region_city">
 							<div class="request__row_third hidden__office">
 								<label for="request__surnamename" id="label__surname" class="all__label">
 									<input type="text" name="request__surname" id="request_surname" class="request__input" placeholder="Фамилия">
@@ -495,6 +493,9 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 		<form id="form3r">
 			<div class="request__checkbox">
 				<input type="hidden" name="region__request" id="region_request">
+                <input type="hidden" name="region__id" class="region_id">
+                <input type="hidden" name="region__name" class="region_name">
+                <input type="hidden" name="region__city" class="region_city">
 				<label for="request_apart" class="request__label_chek">
 					<span class="check__request active">
 						<input type="checkbox" name="request__apart" id="request_apart" class="check__box" checked="checked">
@@ -555,6 +556,9 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 		<form id="form2r">
 			<div class="request__checkbox">
 				<input type="hidden" name="region__consult" id="region_consult">
+                <input type="hidden" name="region__id" class="region_id">
+                <input type="hidden" name="region__name" class="region_name">
+                <input type="hidden" name="region__city" class="region_city">
 				<label for="popup__consapart">
 					<span class="request__label_cons active">
 						<input type="checkbox" name="popup__cons_apart" id="popup__consapart" class="check__box" checked="checked">
@@ -621,6 +625,13 @@ function isEmpty(str){ return(!str||0===str.length);}
 	$('body').on('click','.location__add_cities li a',function(){
 		var textCity = $(this).html();
 		var parseCity = $(this).attr('tab');
+		
+        $('.region_city').val(textCity);
+        var tarifnik_id = $(this).data('tarifnik_id');
+        $('.region_id').val(tarifnik_id);
+        var region_name = $('.location__grid_row > [data-tarifnik_id="'+tarifnik_id+'"]').text();
+        $('.region_name').val(region_name);
+		
 		$('.hidden__location').hide();
 		$('.header__info__location__title').html('');
 		$('.header__info__location__title').html(textCity);
@@ -660,6 +671,15 @@ function listCity(nameCity, acti){
 			$('.header__info__location__title').html(' ');
 			$('.header__info__location__title').html(data.cityname);
 			//console.log(data);
+
+            if(nameCity){
+                $('.region_city').val(nameCity);
+                var tarifnik_id = $('[title="'+nameCity+'"]').data('tarifnik_id');
+                $('.region_id').val(tarifnik_id);
+                var region_name = $('.location__grid_row > [data-tarifnik_id="'+tarifnik_id+'"]').text();
+                $('.region_name').val(region_name);
+            }
+            
 			
 		}
 	});
@@ -669,7 +689,6 @@ function listCity(nameCity, acti){
 function addContent(geotag){
     
     //console.log(geotag);
-    /*
     
 	var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 	var data = {
@@ -683,8 +702,11 @@ function addContent(geotag){
 		url: ajaxurl,
 		data: data,
 		dataType: "json",
-		success: function(data) { 
+		success: function(data) {
+		    
+		    //console.log('success: ');
 			//console.log(data);
+			
 			var regions = $('#temporary_banner').attr('regions');
 			var alltab = $('#temporary_banner').attr('all-tab');
 			if(isEmpty(regions) === false){
@@ -721,7 +743,7 @@ function addContent(geotag){
 		}
 	});
 	
-	*/
+	
 }
 
 
@@ -789,9 +811,9 @@ function initGeolocation(){
 			var long = position.coords.longitude;
 
             //ZAKOMENTIT
-			var lat = 64.564239;//second
-            var long = 39.831502;//first
-			console.log('lat:'+lat+' long:'+long);
+			//var lat = 64.564239;//second
+            //var long = 39.831502;//first
+			//console.log('lat:'+lat+' long:'+long);
 			
 			var myGeocoder = ymaps.geocode([lat,long]);
 			myGeocoder.then(
@@ -799,13 +821,13 @@ function initGeolocation(){
 			        // Выведем в консоль данные, полученные в результате геокодирования объекта.
 					var objs = res.geoObjects.toArray();
 					geoIpCity = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[4].name;
-                    console.log(geoIpCity);
+                    //console.log(geoIpCity);
 
                     var geoProvince = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[2].name;
-                    console.log(geoProvince);
+                    //console.log(geoProvince);
 					
 					var geoTest = objs[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components;
-                    console.log(geoTest);
+                    //console.log(geoTest);
                     
 					addContent(geoIpCity);
 					listCity(geoIpCity,'starting');

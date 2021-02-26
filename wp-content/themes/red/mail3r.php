@@ -1,4 +1,16 @@
-<?php 
+<?php
+
+//Функция логирования
+function wpLog($filename, $data, $append=false)
+{
+    if(!$append){
+        file_put_contents(__DIR__ . '/'. $filename . '.txt', var_export($data,true));
+    }else{
+        file_put_contents(__DIR__ . '/'. $filename . '.txt', var_export($data,true).PHP_EOL, FILE_APPEND);
+    }
+    
+}
+wpLog('post-mail3r', $_POST, false);
 
 function is_email($email) {
 	return filter_var($email, FILTER_VALIDATE_EMAIL);

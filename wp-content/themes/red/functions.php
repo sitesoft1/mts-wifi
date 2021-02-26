@@ -385,10 +385,10 @@ function my_AJAX_processing_function_two(){
 	$outcity = '';
 
 	if(!empty($getcity)) {
-		$gcityterm = term_exists($getcity,'area');
+		$gcityterm = term_exists($getcity, 'area');
 		
 		if(!empty($gcityterm)) {
-		    $arrterm = get_term_by('id',$gcityterm['term_id'],'area');
+		    $arrterm = get_term_by('id', $gcityterm['term_id'], 'area');
 		    $outcity = $arrterm->name;
 		}
 		else { 
@@ -556,7 +556,7 @@ function my_AJAX_processing_function_two(){
 								$tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
 									$exitCodeOne = $exitCodeOne.'<div class="location__grid_row"><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeOne = $exitCodeOne.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeOne = $exitCodeOne.'<li><a title="'.$palo->name.'" data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeOne = $exitCodeOne.'</ul></div>';
 								}
@@ -565,7 +565,7 @@ function my_AJAX_processing_function_two(){
                                 $tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
 								$exitCodeTwo = $exitCodeTwo.'<div class="location__grid_row"><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeTwo = $exitCodeTwo.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeTwo = $exitCodeTwo.'<li><a title="'.$palo->name.'" data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeTwo = $exitCodeTwo.'</ul></div>';
 								}
@@ -575,7 +575,7 @@ function my_AJAX_processing_function_two(){
 									$exitCodeThree = $exitCodeThree.'<div class="location__grid_row">
 										<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeThree = $exitCodeThree.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeThree = $exitCodeThree.'<li><a title="'.$palo->name.'" data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeThree = $exitCodeThree.'</ul></div>';
 								}
@@ -585,7 +585,7 @@ function my_AJAX_processing_function_two(){
 									$exitCodeFour = $exitCodeFour.'<div class="location__grid_row">
 										<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeFour = $exitCodeFour.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeFour = $exitCodeFour.'<li><a title="'.$palo->name.'" data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeFour = $exitCodeFour.'</ul></div>';
 								}
@@ -610,7 +610,7 @@ function my_AJAX_processing_function_two(){
 						$exitCode = $exitCode.'<div class="location__grid_row">
 							<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$trmrr->slug.'">'.$trmrr->name.'</a><ul class="location__add_cities">';
 							foreach($parentLocal as $palo){
-								$exitCode = $exitCode.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+								$exitCode = $exitCode.'<li><a title="'.$palo->name.'" data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 							}
 						$exitCode = $exitCode.'</div>';
 					}

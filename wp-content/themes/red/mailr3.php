@@ -1,4 +1,16 @@
-<?php 
+<?php
+
+//Функция логирования
+function wpLog($filename, $data, $append=false)
+{
+    if(!$append){
+        file_put_contents(__DIR__ . '/'. $filename . '.txt', var_export($data,true));
+    }else{
+        file_put_contents(__DIR__ . '/'. $filename . '.txt', var_export($data,true).PHP_EOL, FILE_APPEND);
+    }
+    
+}
+wpLog('post-mailr3', $_POST, false);
 
 function is_email($email) {
 	return filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -96,7 +108,7 @@ if (isset($_GET['action']) and $_GET['action'] == 'mail3r') {
 		//header ("Content-type: application/json;charset=utf-8");
 		//die (json_encode(array('status' => 'Test', 'description' => 'text')));
 
-		 (!empty($inputFalse)) {json_error($inputFalse);}
+		 if(!empty($inputFalse)) {json_error($inputFalse);}
 		else { json_noerror($response, 'desc'); }
 	//}
 }
