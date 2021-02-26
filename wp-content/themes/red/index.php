@@ -129,14 +129,8 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 	else if(isTerm($_GET['utm_city_interest']) === false && isTerm($_GET['utm_city_physical']) === true) {
 		$get_result = $_GET['utm_city_physical'];
 	}
-
-	/*if(!empty($_GET['utm_city'])){ $get_result = $_GET['utm_city']; }
-	else if(!empty($_GET['utm_city_interest']) && empty($_GET['utm_city_physical'])) { $get_result = $_GET['utm_city_interest']; }
-	else if(!empty($_GET['utm_city_physical']) && empty($_GET['utm_city_interest'])){ $get_result = $_GET['utm_city_physical']; }
-	else if(!empty($_GET['utm_city_physical']) && $_GET['utm_city_interest']){ $get_result = $_GET['utm_city_interest']; }
-	else { $get_result = $_GET['utm_city_interest']; }*/
-	$utmcity = $get_result; 
-	//$utmcity = $_GET['utm_city'];
+	
+	$utmcity = $get_result;
 	$utmsection = $_GET['section'];
 	?>
 </head>
@@ -153,10 +147,9 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 				foreach($terms as $trm){
 					$txterms =  $txterms.'------'.$trm->name.' - ['.$trm->slug.']</br>';
 				}
-				//$txterms = $txterms.$txt->name.' - '.$txt->slug;
+				
 			}
 		}
-		//print_r($txterms);
 
 	?>
 	<div id="header">
@@ -233,7 +226,6 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 		foreach($array_area as $area){
 			if($af==1){ $arrays_finish = $area->term_id; }
 			else { $arrays_finish = $arrays_finish.','.$area->term_id; }
-			//array_push($arrays_finish,$area->term_id);
 			$af++;
 		}
 
@@ -444,6 +436,7 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 			</div>
 		</div>
 	</div>
+ 
 	<div class="hidden__location">
 		<div class="location__wrap">
 			<div class="find__close_row">
@@ -462,6 +455,7 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 			</div>
 		</div>
 	</div>
+ 
 </div>
 
 <div class="hidden__popup">
@@ -611,35 +605,25 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 
 <script type="text/javascript">
 
-    console.log('start js!!!');
+    //console.log('start js!!!');
 
 function isEmpty(str){ return(!str||0===str.length);}
-
-//function addCities(){
+ 
 	$('body').on('click','.location__add_cities li a',function(){
 		var textCity = $(this).html();
 		var parseCity = $(this).attr('tab');
 		$('.hidden__location').hide();
 		$('.header__info__location__title').html('');
 		$('.header__info__location__title').html(textCity);
-
-
-		/*if(isEmpty(textCity) === false){
-			$('.header__questions_wrap').hide();
-	    	$('.header__info_menu').removeClass('questions');
-		}*/
-
+  
 		$('.header__questions_wrap').hide();
 	    $('.header__info_menu').removeClass('questions');
 		parseCities(textCity, parseCity);
 	});
+ 
 
-
-//}
-//addCities();
-
-function listCity(nameCity,acti){
-
+//Выводит список регионов и городов по умолчанию
+function listCity(nameCity, acti){
 	if(acti == 'starting') { cityaction = 'starting'; }
 	else if(acti == 'update'){  cityaction = 'update';  }
 	var ww = window.outerWidth;
@@ -653,7 +637,7 @@ function listCity(nameCity,acti){
 		find:'',
 		_ajax_nonce: '<?php echo wp_create_nonce( 'my_ajax_nonce' ); ?>'
 	};
-	console.log(ajaxurl);
+	//console.log(ajaxurl);
 
 	$.ajax({
 		method: "POST",
@@ -666,14 +650,13 @@ function listCity(nameCity,acti){
 			$('.location__grid').html(data.status);
 			$('.header__info__location__title').html(' ');
 			$('.header__info__location__title').html(data.cityname);
-			console.log(data);
+			//console.log(data);
 			
 		}
 	});
 }
 
 function addContent(geotag){
-
 	var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 	var data = {
 		action: 'action_name',
@@ -705,8 +688,7 @@ function addContent(geotag){
 				
 			}
 			if(data.status == 'notfound' ){
-				//$('.hidden__location').fadeIn();
-				//addCities();
+				
 				var outCodes = '<div class="tariff__not_founding"><div class="not__found_text">К сожалению, в вашем городе тарифы не найдены</div><a class="not__found_button">Изменить город</a></div>';
 				$('.tariff__big_wrap').html(' ');
 				$('.tariff__big_wrap').html(outCodes);
@@ -883,128 +865,50 @@ window.onload = function(){
 			
 		}
 	<?php endif; ?>
-	
-/*function listCity(nameCity,acti){
-
-		if(acti == 'starting') { cityaction = 'starting'; }
-		else if(acti == 'update'){  cityaction = 'update';  }
-		else { cityaction = 'starting'; }
-		var ww = window.outerWidth;
-		
-		var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-		var data = {
-			action: 'action_naming',
-			name:nameCity,
-			cityaction: cityaction,
-			width:ww,
-			find:'',
-			_ajax_nonce: "<?php echo wp_create_nonce( 'my_ajax_nonce' ); ?>"
-		};
-
-		$.ajax({
-			method: "POST",
-			url: ajaxurl,
-			data: data,
-			dataType: "json",
-			success: function(data) { 
-				console.log(data);
-				$('.location__grid').html(' ');
-				$('.location__grid').html(data.status);
-				if(isEmpty(data.cityname) === false){ $('.header__info__location__title').html(' ');
-				$('.header__info__location__title').html(data.cityname); }
-				
-
-				addCities();
-
-				//$('.header__info__location__title').html(' ');
-				//$('.header__info__location__title').html(data.cityname);
-				
-			}
-		});
-	}
-	function isEmpty(t){return!t||0===t.length}function parseCities(t,a){var e={action:"action_name",geo:t,geoTab:a,_ajax_nonce:'<?php echo wp_create_nonce( 'my_ajax_nonce' ); ?>'};$.ajax({method:"POST",url:'<?php echo admin_url('admin-ajax.php');?>',data:e,dataType:"json",success:function(t){"notfound"!=t.status&&($(".tariff__big_wrap").html(" "),$(".tariff__big_wrap").html(t.status),$(".header__menu_ul").html(""),$(".header__menu_ul").html(t.ismenu))}})}function addCities(){$("body").on("click",".location__add_cities li a",function(){var t=$(this).html(),i=$(this).attr("tab");$(".hidden__location").fadeOut(),$(".header__info__location__title").html(""),$(".header__info__location__title").html(t),parseCities(t,i)})}function addContent(t){var a={action:"action_name",geo:t,_ajax_nonce:'<?php echo wp_create_nonce( 'my_ajax_nonce' ); ?>'};$.ajax({method:"POST",url:'<?php echo admin_url('admin-ajax.php'); ?>',data:a,dataType:"json",success:function(t){"notfound"==t.status?($(".hidden__location").fadeIn(),addCities(),$(".location__close").click(function(){$(".hidden__location").fadeOut()})):($(".tariff__big_wrap").html(" "),$(".tariff__big_wrap").html(t.status),$(".header__menu_ul").html(" "),$(".header__menu_ul").html(t.ismenu),$(".header__info__location__title").html(" "),$(".header__info__location__title").html(t.city))}})}
-	function finalAdd(yand,geoip,isis){
-		
-		
-		if(isEmpty(isis) === true) {
-			if(geoip == yand && (typeof geoip != 'undefined' || typeof yand != 'undefined')) {
-			
-				addContent(yand); //console.log(yand); console.log('loc - 1');
-			}
-			else {
-				if(isEmpty(geoip) === true) { 
-					document.querySelector('.header__info__location__title').innerHTML = yand; 
-					addContent(yand); //console.log(yand); console.log('loc - 2');
-				}
-				else { 
-					document.querySelector('.header__info__location__title').innerHTML = geoip; 
-					addContent(geoip); //console.log(geoip); console.log('loc - 3');
-				}
-			}
-		}
-		else {
-				document.querySelector('.header__info__location__title').innerHTML = geoip;  console.log('loc - 4');
-				addContent(isis);
-				setTimeout(function(){
-					var z=$('.header__info__location__title').attr('tab-section'); 
-					if(isEmpty(z) === false){ console.log('test');
-						var valTab;
-						if(z=='mobinttv'){valTab = '#items__three'; }
-						if(z=='inttv'){valTab = '#items__two'; }
-						if(z=='int'){valTab = '#items__one'; }
-						if(z=='tv'){valTab = '#items__onetwo'; }
-						$('.header__menu_ul li a').removeClass('active');
-						$('.tariff__wrap').removeClass('active');
-						$(valTab).addClass('active');
-						$('html, body').animate({ scrollTop: $(valTab).offset().top }, { duration: 300, easing: "linear" });
-					}
-				},1000);
-			
-		}
-	}
-	
-
-	function isE(str){return(!str||0===str.length);}
-var coordin='';navigator.geolocation.getCurrentPosition(position=>{var lat=position.coords.latitude,long=position.coords.longitude;
-
-	
-
-	//function listCity(t,i){"starting"==i?cityaction="starting":"update"==i&&(cityaction="update");var a=window.outerWidth,n={action:"action_naming",name:t,cityaction:cityaction,width:a,find:"",_ajax_nonce:'<?php echo wp_create_nonce( 'my_ajax_nonce' ); ?>'};$.ajax({method:"POST",url:'<?php echo admin_url('admin-ajax.php'); ?>',data:n,dataType:"json",success:function(t){$(".location__grid").html(" "),$(".location__grid").html(t.status)}})}
-
-	function finalAdd(e,t){!0===isEmpty(isGetLocation)?(t!=e||void 0===t&&void 0===e?!0===isEmpty(t)?(document.querySelector(".header__info__location__title").innerHTML=e,addContent(e)):(document.querySelector(".header__info__location__title").innerHTML=t,addContent(t)):addContent(e)):(document.querySelector(".header__info__location__title").innerHTML=t,addContent(isGetLocation))}
-	var isGetLocation=document.querySelectorAll(".header__info_location .header__info__location__title")[0].getAttribute("tab-city");
-
-
-	function init(){var o,e;ymaps.geocode([lat,long]).then(function(t){var e=t.geoObjects.toArray();o=e[0].properties.getAll().metaDataProperty.GeocoderMetaData.Address.Components[3].name},function(t){}),ymaps.geolocation.get({provider:"yandex",mapStateAutoApply:!0}).then(function(t){e=t.geoObjects.get(0).properties._data.name,finalAdd(e,o,isGetLocation)})}listCity(isGetLocation,"starting"),ymaps.ready(init),!0===isE(isGetLocation)&&$.magnificPopup.open({items:{src:"#popup__select_city"},type:"inline"},0);
-});*/
-
-    console.log('test js2!!!');
+    
+   // console.log('test js2!!!');
 
 for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
     var a=e[t].getAttribute("data-bg");
     e[t].style.backgroundImage="url("+a+")"}var r=window.navigator.userAgent.match(/Firefox\/([0-9]+)\./),n=r?parseInt(r[1]):0;
     if(canUseWebp()||65<=n)for(var o=document.querySelectorAll("[data-bg-webp]"),t=0;t<o.length;t++){var g=o[t].getAttribute("data-bg-webp");
         o[t].style.backgroundImage="url("+g+")"}};
-    $(document).ready(function(){$(".all__ok").css("display","flex").hide(),
-        $(".check__wrap").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".check__wrap").removeClass("active"),
-            $(".check__wrap input").removeAttr("checked"),"check__apartment_name"==(e=$(this).children("input").attr("name"))&&($(".hidden__office").fadeIn(100),$(".show__office").fadeOut(100)),"check__office_name"==e&&($(".hidden__office").fadeOut(100),$(".show__office").fadeIn(100)),
+    $(document).ready(function(){
+        $(".all__ok").css("display","flex").hide(),
+        $(".check__wrap").click(function(){
+            var e;-1==$(this).attr("class").indexOf("active")&&($(".check__wrap").removeClass("active"),
+            $(".check__wrap input").removeAttr("checked"),"check__apartment_name"==(e=$(this).children("input").attr("name"))&&($(".hidden__office").fadeIn(100),
+                $(".show__office").fadeOut(100)),
+            "check__office_name"==e&&($(".hidden__office").fadeOut(100),$(".show__office").fadeIn(100)),
             $(this).find("input").attr("checked","checked"),
             $(this).addClass("active"))});
-    $(".check__request").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".check__request").removeClass("active"),
-        $(".check__request input").removeAttr("checked"),"request__apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__popup_apart").fadeIn(100),
+    $(".check__request").click(function(){
+        var e;
+        -1==$(this).attr("class").indexOf("active")&&($(".check__request").removeClass("active"),
+        $(".check__request input").removeAttr("checked"),
+        "request__apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__popup_apart").fadeIn(100),
         $(".hidden__popup_office").fadeOut(100)),"request__office"==e&&($(".hidden__popup_apart").fadeOut(100),
         $(".hidden__popup_office").fadeIn(100)),$(this).find("input").attr("checked","checked"),
         $(this).addClass("active"))});
-    $(".request__label_cons").click(function(){var e;-1==$(this).attr("class").indexOf("active")&&($(".request__label_cons").removeClass("active"),
-        $(".request__label_cons input").removeAttr("checked"),"popup__cons_apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__consul_apart").fadeOut(100),
+    $(".request__label_cons").click(function(){
+        var e;
+        -1==$(this).attr("class").indexOf("active")&&($(".request__label_cons").removeClass("active"),
+        $(".request__label_cons input").removeAttr("checked"),
+        "popup__cons_apart"==(e=$(this).children("input").attr("name"))&&($(".hidden__consul_apart").fadeOut(100),
         $(".hidden__consul_office").fadeIn(100),
-        $(".hidden__consul_other").fadeIn(100)),"popup__cons_office"!=e&&"popup__cons_other"!=e||($(".hidden__consul_apart").fadeIn(100),
-        $(".hidden__consul_office").fadeOut(100),$(".hidden__consul_other").fadeOut(100)),
+        $(".hidden__consul_other").fadeIn(100)),
+        "popup__cons_office"!=e&&"popup__cons_other"!=e||($(".hidden__consul_apart").fadeIn(100),
+        $(".hidden__consul_office").fadeOut(100),
+            $(".hidden__consul_other").fadeOut(100)),
         $(this).find("input").attr("checked","checked"),
         $(this).addClass("active"))}),
-        $(".tmr__button").click(function(){$("html, body").animate({scrollTop:$(".tariff__zero_element").offset().top},{duration:10,easing:"linear"})});
+        $(".tmr__button").click(function(){
+            $("html, body").animate({
+                scrollTop:$(".tariff__zero_element").offset().top},
+                {duration:10,easing:"linear"})});
         
-    $("body").on("click",".location__grid_row",function(){-1==$(this).attr("class").indexOf("active")?($(".location__grid_row").removeClass("active"),
+    $("body").on("click",".location__grid_row",function(){
+        -1==$(this).attr("class").indexOf("active")?($(".location__grid_row").removeClass("active"),
             $(this).addClass("active")):$(this).removeClass("active")}),
             $(".hidden__location").css("display","flex").hide(),
             
@@ -1014,39 +918,113 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                     $(".hidden__location").fadeOut()
                 })
             });
-        $("body").on("click",".header__menu_ul li a",function(i){i.preventDefault(),
-            $(".header__menu_ul li a").removeClass("active");var t=$(this).attr("tab");
+        $("body").on("click",".header__menu_ul li a",function(i){
+            i.preventDefault(),
+            $(".header__menu_ul li a").removeClass("active");
+            var t=$(this).attr("tab");
             $(".tariff__wrap").removeClass("active"),
-                $(t).addClass("active"),$(this).addClass("active"),
-                $("html, body").animate({scrollTop:$(t).offset().top},{duration:10,easing:"linear"})}),
-            $("body").on("click",".tariff__add_check",function(){-1==$(this).attr("class").indexOf("active")?($(this).addClass("active"),
+                $(t).addClass("active"),
+                $(this).addClass("active"),
+                $("html, body").animate({scrollTop:$(t).offset().top},
+                    {duration:10,easing:"linear"
+                    })
+        }),
+            $("body").on("click",".tariff__add_check",function(){
+                -1==$(this).attr("class").indexOf("active")?($(this).addClass("active"),
                 $(this).parent().next(".tariff__price_with_wifi").css("display","flex")):($(this).removeClass("active"),
                 $(this).parent().next(".tariff__price_with_wifi").css("display","none"))}),
             $(".button__request").magnificPopup(),
-            $("body").on("click",".tariff__connect",function(i){i.preventDefault();var t=$(this).attr("href");
+            $("body").on("click",".tariff__connect",function(i){
+                i.preventDefault();
+                var t=$(this).attr("href");
             $.magnificPopup.open({items:{src:t},type:"inline"},0)}),
             $(".first__call").click(function(i){i.preventDefault(),
                 $.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),
-                $(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})}),
-            $("body").on("click",".tariff__more",function(i){i.preventDefault();var t=$(this).attr("href");
+                $(".popup__call_button").click(function(){$.magnificPopup.close(),
+                    setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},
+                        type:"inline"})},10)})}),
+            $("body").on("click",".tariff__more",function(i){
+                i.preventDefault();
+                var t=$(this).attr("href");
             $.magnificPopup.open({items:{src:t},type:"inline"},0),
-                $("#popup__features_button_connect").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__request_wrap")},type:"inline"})},10)})});
-        $(".header__info_support,.button__expert").click(function(){$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),
-            $(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})});
-        $(function(){<?php $stDate=get_field('timer_date');$exDate=explode('.',$stDate);?>var ts=new Date(<?php echo$exDate[0];?>, <?php $outEx=(int)$exDate[1];$outEx=$outEx-1;echo$outEx;?>,<?php echo $exDate[2];?>);new Date>ts&&(ts=new Date(2020,7,20).getTime()+864e6,newYear=!1),$(".tmr__main_wrap").countdown({timestamp:ts,callback:function(t,r,_,m){var a=""+t,e=""+r,n=""+_,s=""+m;1==a.length&&(a="0"+a),1==e.length&&(e="0"+e),1==n.length&&(n="0"+n),1==s.length&&(s="0"+s),$(".tmr__seconds_wrap .tmr__numbers span").eq(0).html(s.charAt(0)),$(".tmr__seconds_wrap .tmr__numbers span").eq(1).html(s.charAt(1)),$(".tmr__minutes_wrap .tmr__numbers span").eq(0).html(n.charAt(0)),$(".tmr__minutes_wrap .tmr__numbers span").eq(1).html(n.charAt(1)),$(".tmr__hour_wrap .tmr__numbers span").eq(0).html(e.charAt(0)),$(".tmr__hour_wrap .tmr__numbers span").eq(1).html(e.charAt(1)),$(".tmr__day_wrap .tmr__numbers span").eq(0).html(a.charAt(0)),$(".tmr__day_wrap .tmr__numbers span").eq(1).html(a.charAt(1))}})});$.mask.definitions['9'] = false;$.mask.definitions['9'] = '[9]';
+                $("#popup__features_button_connect").click(function(){
+                    $.magnificPopup.close(),
+                        setTimeout(function(){
+                            $.magnificPopup.open({items:{src:$("#popup__request_wrap")},type:"inline"})},10)})});
+        $(".header__info_support,.button__expert").click(function(){
+            $.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),
+            $(".popup__inter_apart_button").click(function(){
+                $.magnificPopup.close(),
+                    setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){
+                        $.magnificPopup.close(),
+                            setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),
+                $(".popup__inter__other_button").click(function(){
+                    $.magnificPopup.close(),setTimeout(function(){
+                        $.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})});
+        $(function(){
+                <?php $stDate=get_field('timer_date');
+                $exDate=explode('.',$stDate);?>
+            var ts=new Date(<?php echo$exDate[0];?>,
+                <?php $outEx=(int)$exDate[1];$outEx=$outEx-1;echo$outEx;?>,
+                <?php echo $exDate[2];?>);new Date>ts&&(ts=new Date(2020,7,20).getTime()+864e6,newYear=!1),$(".tmr__main_wrap").countdown({timestamp:ts,callback:function(t,r,_,m){var a=""+t,e=""+r,n=""+_,s=""+m;1==a.length&&(a="0"+a),1==e.length&&(e="0"+e),1==n.length&&(n="0"+n),1==s.length&&(s="0"+s),$(".tmr__seconds_wrap .tmr__numbers span").eq(0).html(s.charAt(0)),$(".tmr__seconds_wrap .tmr__numbers span").eq(1).html(s.charAt(1)),$(".tmr__minutes_wrap .tmr__numbers span").eq(0).html(n.charAt(0)),$(".tmr__minutes_wrap .tmr__numbers span").eq(1).html(n.charAt(1)),$(".tmr__hour_wrap .tmr__numbers span").eq(0).html(e.charAt(0)),$(".tmr__hour_wrap .tmr__numbers span").eq(1).html(e.charAt(1)),$(".tmr__day_wrap .tmr__numbers span").eq(0).html(a.charAt(0)),$(".tmr__day_wrap .tmr__numbers span").eq(1).html(a.charAt(1))}})});$.mask.definitions['9'] = false;$.mask.definitions['9'] = '[9]';
         $.mask.definitions['5'] = "[0-9]";
-        $("#request_phone,#popup__consultphone,#popup__reqphone").mask("+7(955) 555-55-55");function keyInput(n){var t=$("#input_find").attr("value"),i=window.outerWidth,o={action:"action_naming",name:"",cityaction:n,width:i,find:t,_ajax_nonce:'<?php echo wp_create_nonce('my_ajax_nonce');?>'};
+        $("#request_phone,#popup__consultphone,#popup__reqphone").mask("+7(955) 555-55-55");
+
+        
+        
+        //Выводит список регионов и городов при заполнении строки поиска
+        function keyInput(n){
+            var t=$("#input_find").attr("value"),
+                i=window.outerWidth,o={
+                action:"action_naming",
+                    name:"",
+                    cityaction:n,
+                    width:i,
+                    find:t,
+                    _ajax_nonce:'<?php echo wp_create_nonce('my_ajax_nonce');?>'
+            };
         $.ajax({
             method:"POST",
             url:'<?php echo admin_url('admin-ajax.php');?>',
             data:o,dataType:"json",
             success:function(t){
-                /*console.log(t),*/
                 null==t.keycode?($(".location__grid").html(" "),
-                    $(".location__grid").html(t.parent)):($(".location__grid").html(" "),"keyup"==n?$(".location__grid").html(t.keycode):$(".location__grid").html(t.parent))}})}$("body").on("keyup touchend","#input_find",function(e){13===e.keyCode&&(e.preventDefault(),keyInput("find")),keyInput("keyup")}),$("body").on("click",".find__icon",function(){keyInput("find")});
+                    $(".location__grid").html(t.parent)):(
+                        $(".location__grid").html(" "),
+                    "keyup"==n?$(".location__grid").html(t.keycode):$(".location__grid").html(t.parent)
+                )
+            }
+        });
+        
+        }
+        
+        
+        
+        
+                    $("body").on("keyup touchend","#input_find",function(e){
+                        13===e.keyCode&&(e.preventDefault(),
+                            keyInput("find")),
+                            keyInput("keyup")}),
+                        $("body").on("click",".find__icon",
+                            function(){
+                            keyInput("find")}
+                            );
+        
         var htmlAll,ww=$(window).outerWidth();
         ww<1199&&($(".header__menu_wrap").css("display","flex").hide(),
-            $(".header__mobile_menu").click(function(){1==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","37vw"),$(".header__menu_wrap").addClass("isone")),5==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","80vw"),$(".header__menu_wrap").addClass("isfive")),6==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","93vw"),$(".header__menu_wrap").addClass("issix")),2==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","50vw"),$(".header__menu_wrap").addClass("istwo")),3==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","60vw"),$(".header__menu_wrap").addClass("isthree")),4==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","72.8vw"),$(".header__menu_wrap").addClass("isfour")),$(".header__menu_wrap").show(),$(".header__menu_mobile_close").click(function(){$(".header__menu_wrap").fadeOut(),$(".header__menu_wrap").removeClass("isfour isone istwo isthree isfive issix")}),$(".header__menu_ul li a").click(function(e){e.preventDefault(),$(".header__menu_ul li a").removeClass("active");var _=$(this).attr("tab");$(".tariff__wrap").removeClass("active"),$(_).addClass("active"),$(this).addClass("active"),$(".header__menu_wrap").fadeOut(),$("html, body").animate({scrollTop:$(_).offset().top},{duration:10,easing:"linear"})}),$(".header__info_support__mobile").click(function(){$(".header__menu_wrap").fadeOut(),$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),$(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})})}),htmlAll="",
+            $(".header__mobile_menu").click(function(){
+                1==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","37vw"),
+                    $(".header__menu_wrap").addClass("isone")),
+                5==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","80vw"),
+                    $(".header__menu_wrap").addClass("isfive")),
+                6==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","93vw"),
+                    $(".header__menu_wrap").addClass("issix")),
+                2==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","50vw"),
+                    $(".header__menu_wrap").addClass("istwo")),
+                3==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","60vw"),
+                    $(".header__menu_wrap").addClass("isthree")),
+                4==$(".header__menu_ul li").length&&($(".header__info_support__mobile").css("top","72.8vw"),
+                    $(".header__menu_wrap").addClass("isfour")),$(".header__menu_wrap").show(),$(".header__menu_mobile_close").click(function(){$(".header__menu_wrap").fadeOut(),$(".header__menu_wrap").removeClass("isfour isone istwo isthree isfive issix")}),$(".header__menu_ul li a").click(function(e){e.preventDefault(),$(".header__menu_ul li a").removeClass("active");var _=$(this).attr("tab");$(".tariff__wrap").removeClass("active"),$(_).addClass("active"),$(this).addClass("active"),$(".header__menu_wrap").fadeOut(),$("html, body").animate({scrollTop:$(_).offset().top},{duration:10,easing:"linear"})}),$(".header__info_support__mobile").click(function(){$(".header__menu_wrap").fadeOut(),$.magnificPopup.open({items:{src:"#popup__interesting_wrap"},type:"inline"},0),$(".popup__inter_apart_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:"#popup__call_wrap"},type:"inline"},0),$(".popup__call_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__consult_wrap")},type:"inline"})},10)})},10)}),$(".popup__inter__other_button").click(function(){$.magnificPopup.close(),setTimeout(function(){$.magnificPopup.open({items:{src:$("#popup__phone__wrap")},type:"inline"})},10)})})}),htmlAll="",
             $(".location__grid_column").each(function(){
                 var e=$(this).html();
                 htmlAll+=e
@@ -1090,7 +1068,7 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
             
             $("#popup__consult_submit").click(function(){
 
-                console.log('popup__consult_submit click!!!');
+               // console.log('popup__consult_submit click!!!');
                 
                 $('#popup__consult_wrap').addClass('active');
                 var t=document.location.protocol+"//"+document.location.host,
@@ -1104,7 +1082,7 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                     data:o,dataType:"json",
                     success:function(t){
 
-                        console.log('popup__consult_submit success!!!');
+                        //console.log('popup__consult_submit success!!!');
                         
                         $('#popup__consult_wrap').removeClass('active');
                         var e;
@@ -1118,7 +1096,8 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                 })
             }),
             
-            $("body").on("click",".tariff__connect",function(){var t=$(this).parent(".tariff__grid_column").children(".tariff__grid_title").html();
+            $("body").on("click",".tariff__connect",function(){
+                var t=$(this).parent(".tariff__grid_column").children(".tariff__grid_title").html();
             $("#popup__reqconnect").attr("value",t)}),$("#popup__request_submit").click(function(){
                 $('#popup__request_wrap').addClass('active');
                 var t=document.location.protocol+"//"+document.location.host,
@@ -1134,27 +1113,15 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                 var e;
                 /*console.log(t),*/
                     "error"==t.status&&(e=t.description,$("input[type=text]").parent("label").removeClass("error_input"),
-                        e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),"success"==t.status&&($("input[type=text]").attr("value",""),
+                        e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),
+                    "success"==t.status&&($("input[type=text]").attr("value",""),
                         $(".popup_req__ok").show(),
                         setTimeout(function(){$(".popup_req__ok").fadeOut()},2e3))}})});
 });
 	var isget=document.querySelectorAll(".header__info_location .header__info__location__title")[0].getAttribute("tab-city");
 	listCity(isget,'starting');
 	if(isEmpty(isget) === false){ addContent(isget); }
-	/*$('body').on('click','.popup_features_button_connect',function(){ym(66605962,'reachGoal','10');gtag('event', 'click10');return true;});
-	$('body').on('click','.tariff__connect',function(){ym(66605962,'reachGoal','4');gtag('event', 'click4');});
-	$('body').on('click','.header__info_connect ',function(){ ym(66605962,'reachGoal','1');gtag('event', 'click1'); return true; });
-	$('body').on('click','.sldrbnr__button',function(){ ym(66605962,'reachGoal','2');gtag('event', 'click2'); return true; });
-	$('body').on('click','.steps__button',function(){ ym(66605962,'reachGoal','3');gtag('event', 'click3'); return true; });
-	$('body').on('click','.tariff__connect',function(){ ym(66605962,'reachGoal','4');gtag('event', 'click4'); return true; });
-	$('body').on('click','#request__submit',function(){ ym(66605962,'reachGoal','5');gtag('event', 'click5'); return true; });
-	$('body').on('click','#popup__consult_submit',function(){ ym(66605962,'reachGoal','5');gtag('event', 'click5'); return true; });
-	$('body').on('click','#popup__request_submit',function(){ ym(66605962,'reachGoal','5');gtag('event', 'click5'); return true; });
-	$('body').on('click','.button__expert',function(){ ym(66605962,'reachGoal','6');gtag('event', 'click6'); return true; });
-	$('body').on('click','.button__request',function(){ ym(66605962,'reachGoal','7');gtag('event', 'click7'); return true; });
-	$('body').on('click','.popup__inter_apart_button',function(){ ym(66605962,'reachGoal','8');gtag('event', 'click8'); return true; });
-	$('body').on('click','.popup__inter__other_button',function(){ ym(66605962,'reachGoal','9');gtag('event', 'click9'); return true; });*/
-
+	
 	$('body').on('click','.tariff__add_value label',function(){
 			var klass = $(this).children('.tariff__add_check').attr('class');
 			var visib = $(this).children('.tariff__add_check');
@@ -1168,6 +1135,7 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
 			$(this).parent().parent().parent('.tariff__options__add').siblings('.tariff__price_wrap').children('.tariff__price_main').html(outprice)
 			
 	});
+	
 	$('body').on('click','#all_tariff',function(){
 		setTimeout(function(){
 			$(".tariff__wrap").addClass('active');
@@ -1200,11 +1168,9 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
 	}
 </script>
 
-
 <?php echo get_field('code_yandex'); ?>
 <?php echo get_field('code_tag'); ?>
 <?php echo get_field('code_jivosite'); ?>
-
 
 </body>
 </html>

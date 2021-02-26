@@ -386,7 +386,11 @@ function my_AJAX_processing_function_two(){
 
 	if(!empty($getcity)) {
 		$gcityterm = term_exists($getcity,'area');
-		if(!empty($gcityterm)) { $arrterm = get_term_by('id',$gcityterm['term_id'],'area'); $outcity = $arrterm->name; }
+		
+		if(!empty($gcityterm)) {
+		    $arrterm = get_term_by('id',$gcityterm['term_id'],'area');
+		    $outcity = $arrterm->name;
+		}
 		else { 
 
 			$termarray = get_terms(['taxonomy' => 'area','meta_key' => 'region_google_id', 'meta_value' => $getcity]); 
@@ -404,10 +408,11 @@ function my_AJAX_processing_function_two(){
 			$parentis = get_term_by('id',$exists_term['term_id'],'area');
 			
 			$isparent = get_term_by('id',$parentis->parent,'area');
+            $tarifnik_id = get_field('tarifnik_id', 'area_'.$isparent->term_id);
 			$exitCode = $exitCode.'<div class="location__grid_column">';
 			$exitCode = $exitCode.'<div class="location__grid_row">
-				<a tab="'.$isparent->slug.'">'.$isparent->name.'</a><ul class="location__add_cities">';
-			$exitCode = $exitCode.'<li><a tab="'.$parentis->slug.'">'.$parentis->name.'</a></li>';
+				<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$isparent->slug.'">'.$isparent->name.'</a><ul class="location__add_cities">';
+			$exitCode = $exitCode.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$parentis->slug.'">'.$parentis->name.'</a></li>';
 			$exitCode = $exitCode.'</ul></div>';
 			
 		}
@@ -453,41 +458,45 @@ function my_AJAX_processing_function_two(){
 					//$keyCode = $valueFind;
 					if(formulaOne($column_1r,3) == 0) {
 						$parentLocal = get_term($keyFind,'area');
+                        $tarifnik_id = get_field('tarifnik_id', 'area_'.$parentLocal->term_id);
 						$keyColOne = $keyColOne.'<div class="location__grid_row active">
-							<a tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
+							<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
 							foreach($valueFind as $palo){
 								$ister = get_term($palo,'area');
-								$keyColOne = $keyColOne.'<li><a tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
+								$keyColOne = $keyColOne.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
 							}
 						$keyColOne = $keyColOne.'</ul></div>';
 					}
 					if(formulaOne($column_1r,2) == 0) {
 						$parentLocal = get_term($keyFind,'area');
+                        $tarifnik_id = get_field('tarifnik_id', 'area_'.$parentLocal->term_id);
 						$keyColTwo = $keyColTwo.'<div class="location__grid_row active">
-							<a tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
+							<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
 							foreach($valueFind as $palo){
 								$ister = get_term($palo,'area');
-								$keyColTwo = $keyColTwo.'<li><a tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
+								$keyColTwo = $keyColTwo.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
 							}
 						$keyColTwo = $keyColTwo.'</ul></div>';
 					}
 					if(formulaOne($column_1r,1) == 0) {
 						$parentLocal = get_term($keyFind,'area');
+                        $tarifnik_id = get_field('tarifnik_id', 'area_'.$parentLocal->term_id);
 						$keyColThree = $keyColThree.'<div class="location__grid_row active">
-							<a tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
+							<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
 							foreach($valueFind as $palo){
 								$ister = get_term($palo,'area');
-								$keyColThree = $keyColThree.'<li><a tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
+								$keyColThree = $keyColThree.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
 							}
 						$keyColThree = $keyColThree.'</ul></div>';
 					}
 					if(formulaOne($column_1r,0) == 0) {
 						$parentLocal = get_term($keyFind,'area');
+                        $tarifnik_id = get_field('tarifnik_id', 'area_'.$parentLocal->term_id);
 						$keyColFour = $keyColFour.'<div class="location__grid_row active">
-							<a tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
+							<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
 							foreach($valueFind as $palo){
 								$ister = get_term($palo,'area');
-								$keyColFour = $keyColFour.'<li><a tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
+								$keyColFour = $keyColFour.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
 							}
 						$keyColFour = $keyColFour.'</ul></div>';
 					}
@@ -495,11 +504,12 @@ function my_AJAX_processing_function_two(){
 				}
 				if($widthing < 1200){
 					$parentLocal = get_term($keyFind,'area');
+                    $tarifnik_id = get_field('tarifnik_id', 'area_'.$parentLocal->term_id);
 					$keyCode = $keyCode.'<div class="location__grid_row active">
-						<a tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
+						<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$parentLocal->slug.'">'.$parentLocal->name.'</a><ul class="location__add_cities">';
 						foreach($valueFind as $palo){
 							$ister = get_term($palo,'area');
-							$keyCode = $keyCode.'<li><a tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
+							$keyCode = $keyCode.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$ister->slug.'">'.$ister->name.'</a></li>';
 						}
 					$keyCode = $keyCode.'</ul></div>';
 				}
@@ -519,11 +529,13 @@ function my_AJAX_processing_function_two(){
 		}
 
 	}
-
+ 
+	
+	//Загрузка списка регионов по умолчанию без каких либо действий пользователя
 	if($cityaction == 'starting' || empty($findcity)){ 
-		$termis = term_exists($getcity,'area');
+		$termis = term_exists($getcity, 'area');
 		if(!empty($termis)) {
-			$exterm = get_term_by('id',$termis['term_id'],'area');
+			$exterm = get_term_by('id', $termis['term_id'], 'area');
 		}
 
 		$listerming = get_terms([ 'taxonomy' => 'area', 'hide_empty' => false]);
@@ -532,7 +544,7 @@ function my_AJAX_processing_function_two(){
 
 			if($widthing > 1199){ 
 				
-			 $list_terms = get_terms(array('taxonomy' => 'area','hide_empty' => false,'parent' => 0)); 
+			 $list_terms = get_terms(array('taxonomy' => 'area', 'hide_empty' => false, 'parent' => 0));
 				$exitCode = $exitCode.'<div class="location__grid_column">';
 						$column_1r = 1;
 						$exitCodeOne=''; $exitCodeTwo=''; $exitCodeThree=''; $exitCodeFour='';
@@ -541,37 +553,39 @@ function my_AJAX_processing_function_two(){
 
 								if(formulaOne($column_1r,3) == 0) {
 								$parentLocal = get_terms(array('taxonomy' => 'area','hide_empty' => false,'parent' => $lite->term_id));
-									$exitCodeOne = $exitCodeOne.'<div class="location__grid_row">
-										<a tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
+								$tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
+									$exitCodeOne = $exitCodeOne.'<div class="location__grid_row"><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeOne = $exitCodeOne.'<li><a tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeOne = $exitCodeOne.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeOne = $exitCodeOne.'</ul></div>';
 								}
 								if(formulaOne($column_1r,2) == 0) {
 								$parentLocal = get_terms(array('taxonomy' => 'area','hide_empty' => false,'parent' => $lite->term_id));
-									$exitCodeTwo = $exitCodeTwo.'<div class="location__grid_row">
-										<a tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
+                                $tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
+								$exitCodeTwo = $exitCodeTwo.'<div class="location__grid_row"><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeTwo = $exitCodeTwo.'<li><a tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeTwo = $exitCodeTwo.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeTwo = $exitCodeTwo.'</ul></div>';
 								}
 								if(formulaOne($column_1r,1) == 0) {
 								$parentLocal = get_terms(array('taxonomy' => 'area','hide_empty' => false,'parent' => $lite->term_id));
+                                $tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
 									$exitCodeThree = $exitCodeThree.'<div class="location__grid_row">
-										<a tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
+										<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeThree = $exitCodeThree.'<li><a tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeThree = $exitCodeThree.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeThree = $exitCodeThree.'</ul></div>';
 								}
 								if(formulaOne($column_1r,0) == 0) {
 								$parentLocal = get_terms(array('taxonomy' => 'area','hide_empty' => false,'parent' => $lite->term_id));
+                                $tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
 									$exitCodeFour = $exitCodeFour.'<div class="location__grid_row">
-										<a tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
+										<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$lite->slug.'">'.$lite->name.'</a><ul class="location__add_cities">';
 											foreach($parentLocal as $palo){
-												$exitCodeFour = $exitCodeFour.'<li><a tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+												$exitCodeFour = $exitCodeFour.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 											}
 									$exitCodeFour = $exitCodeFour.'</ul></div>';
 								}
@@ -592,10 +606,11 @@ function my_AJAX_processing_function_two(){
 				if(!empty($termarray)){
 					foreach($termarray as $trmrr){
 						$parentLocal = get_terms(array('taxonomy' => 'area','hide_empty' => false,'parent' => $trmrr->term_id));
+                        $tarifnik_id = get_field('tarifnik_id', 'area_'.$lite->term_id);
 						$exitCode = $exitCode.'<div class="location__grid_row">
-							<a tab="'.$trmrr->slug.'">'.$trmrr->name.'</a><ul class="location__add_cities">';
+							<a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$trmrr->slug.'">'.$trmrr->name.'</a><ul class="location__add_cities">';
 							foreach($parentLocal as $palo){
-								$exitCode = $exitCode.'<li><a tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
+								$exitCode = $exitCode.'<li><a data-tarifnik_id="'.$tarifnik_id.'" tab="'.$palo->slug.'">'.$palo->name.'</a></li>';
 							}
 						$exitCode = $exitCode.'</div>';
 					}
@@ -605,6 +620,8 @@ function my_AJAX_processing_function_two(){
 		}
 
 	}
+	
+	
 
 	header("Content-type: application/json;charset=utf-8");
 	wp_send_json(array('status' => $exitCode,'cityname' => $outcity,'width' => $widthing,'parent' => $exitCode,'keycode' => $keyCode));
