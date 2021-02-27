@@ -391,13 +391,10 @@ if($_SESSION['currentParam'] == 'direct'){
 							</div>
 							<h3 class="request__address_title hidden__office">Ваш адрес</h3>
 							<div class="request__row_four hidden__office">
-								
-                                <!--<label for="request_address" class="all__label" id="label__address"><input type="text" name="request__address" id="request_address" class="request__input request_address" placeholder="Введите ваш адрес"></label>-->
-								<label for="request_address" class="all__label__dadata" id="label__address">
-                                    <input type="text" name="request__address" id="request_address" class="request__input request_address" placeholder="Введите ваш адрес">
-                                </label>
-								
-                                <label for="request_entrance" class="all__label" id="label__entrance">
+								<label for="request_address" class="all__label" id="label__address">
+									<input type="text" value="" name="request_address" id="request_address" class="request__input request_address" placeholder="Введите ваш адрес test">
+								</label>
+								<label for="request_entrance" class="all__label" id="label__entrance">
 									<input type="text" name="request__entrance" id="request_entrance" class="request__input" placeholder="Подъезд">
 								</label>
 								<label for="request_floor" class="all__label" id="label__floor">
@@ -532,15 +529,12 @@ if($_SESSION['currentParam'] == 'direct'){
 				<label for="popup__req_middlename" id="label__reqname" class="all__label hidden__popup_apart">
 					<input type="text" name="popup__req_middle_name" id="popup__req_middlename" placeholder="Ваша фамилия">
 				</label>
-
-                <label for="popup__reqaddress" id="label__reqaddress" class="all__label_dadata hidden__popup_apart">
-                    <input type="text" name="popup__req_address" id="popup__reqaddress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
-                </label>
-                
 				<label for="popup__reqphone" id="label__reqphone" class="all__label hidden__popup_apart">
 					<input type="text" name="popup__req_phone" id="popup__reqphone" placeholder="Ваш телефон*">
 				</label>
-				
+				<label for="popup__reqaddress" id="label__reqaddress" class="all__label hidden__popup_apart">
+					<input type="text" name="popup__req_address" id="popup__reqaddress" placeholder="Адрес, по которому необходимо произвести подключение">
+				</label>
 				<p class="popup__request_label hidden__popup_apart"><?php echo get_field('popup__request__warning_text'); ?></p>
 				<a href="<?php echo get_privacy_policy_url(); ?>" target="_blank" class="popup__request_privacy hidden__popup_apart"><?php echo get_field('popup__request__privacy_text'); ?></a>
 				<p class="popup__request_start_desc hidden__popup_office"><?php echo get_field('page_request_office'); ?></p>
@@ -602,15 +596,12 @@ if($_SESSION['currentParam'] == 'direct'){
 				<label for="popup__consultmiddlename" class="all__label hidden__consul_office">
 					<input type="text" name="popup__consult_middle_name" id="popup__consultmiddlename" class="" placeholder="Ваше отчество">
 				</label>
-
-                <label for="popup__consuladdress" class="all__label__dadata hidden__consul_other">
-                    <input type="text" name="popup__consultaddress" id="popup__consuladdress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
-                </label>
-                
 				<label for="popup__consultphone" class="all__label hidden__consul_office">
 					<input type="text" name="popup__consult_phone" id="popup__consultphone" class="" placeholder="Ваш телефон*">
 				</label>
-				
+				<label for="popup__consuladdress" class="all__label hidden__consul_other">
+					<input type="text" name="popup__consultaddress" id="popup__consuladdress" class="" placeholder="Адрес, по которому необходимо произвести подключение">
+				</label>
 			</div>
 			<p class="popup__consult_label hidden__consul_office"><?php echo get_field('popup__request__warning_text');  ?></p>
 			<a href="<?php echo get_privacy_policy_url(); ?>" target="_blank" class="popup__consult_privacy hidden__consul_office"><?php echo get_field('popup__request__privacy_text');  ?></a>
@@ -629,23 +620,11 @@ if($_SESSION['currentParam'] == 'direct'){
 	</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/css/suggestions.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/js/jquery.suggestions.min.js"></script>
-<script>
-    $(".request_address").suggestions({
-        token: "7225ec19a2a62bfc433f02c0fb6867ff800848a3",
-        type: "ADDRESS",
-        /* Вызывается, когда пользователь выбирает одну из подсказок */
-        onSelect: function(suggestion) {
-            console.log(suggestion);
-        }
-    });
-</script>
-
 <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/libs/magnific/magnific-popup.css">
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/appfull.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<!--<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/appfull.min.js"></script>-->
+<!--
 <script src="https://api-maps.yandex.ru/2.1/?apikey=252ddaca-a6db-4d30-94ae-460a80828cc8&lang=ru_RU" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -1251,10 +1230,23 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
 		});
 	}
 </script>
+-->
+<link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/css/suggestions.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/js/jquery.suggestions.min.js"></script>
+<script>
+        $("#request_address").suggestions({
+            token: "7225ec19a2a62bfc433f02c0fb6867ff800848a3",
+            type: "ADDRESS",
+            /* Вызывается, когда пользователь выбирает одну из подсказок */
+            onSelect: function(suggestion) {
+                console.log(suggestion);
+            }
+        });
+</script>
 
-<?php echo get_field('code_yandex'); ?>
-<?php echo get_field('code_tag'); ?>
-<?php echo get_field('code_jivosite'); ?>
+<?php //echo get_field('code_yandex'); ?>
+<?php //echo get_field('code_tag'); ?>
+<?php //echo get_field('code_jivosite'); ?>
 
 </body>
 </html>
