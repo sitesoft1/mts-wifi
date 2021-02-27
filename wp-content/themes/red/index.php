@@ -395,8 +395,10 @@ if($_SESSION['currentParam'] == 'direct'){
                                 <!--<label for="request_address" class="all__label" id="label__address"><input type="text" name="request__address" id="request_address" class="request__input request_address" placeholder="Введите ваш адрес"></label>-->
 								<label for="request_address" class="all__label__dadata" id="label__address">
                                     <input type="text" name="request__address" id="request_address" class="request__input request_address" placeholder="Введите ваш адрес">
+                                    <input type="hidden" name="request__dadata__address" class="request_dadata_address">
                                 </label>
 								
+                                
                                 <label for="request_entrance" class="all__label" id="label__entrance">
 									<input type="text" name="request__entrance" id="request_entrance" class="request__input" placeholder="Подъезд">
 								</label>
@@ -533,8 +535,9 @@ if($_SESSION['currentParam'] == 'direct'){
 					<input type="text" name="popup__req_middle_name" id="popup__req_middlename" placeholder="Ваша фамилия">
 				</label>
 
-                <label for="popup__reqaddress" id="label__reqaddress" class="all__label_dadata hidden__popup_apart">
+                <label for="popup__reqaddress" id="label__reqaddress" class="all__label__dadata hidden__popup_apart">
                     <input type="text" name="popup__req_address" id="popup__reqaddress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
+                    <input type="hidden" name="request__dadata__address" class="request_dadata_address">
                 </label>
                 
 				<label for="popup__reqphone" id="label__reqphone" class="all__label hidden__popup_apart">
@@ -605,6 +608,7 @@ if($_SESSION['currentParam'] == 'direct'){
 
                 <label for="popup__consuladdress" class="all__label__dadata hidden__consul_other">
                     <input type="text" name="popup__consultaddress" id="popup__consuladdress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
+                    <input type="hidden" name="request__dadata__address" class="request_dadata_address">
                 </label>
                 
 				<label for="popup__consultphone" class="all__label hidden__consul_office">
@@ -639,6 +643,7 @@ if($_SESSION['currentParam'] == 'direct'){
         /* Вызывается, когда пользователь выбирает одну из подсказок */
         onSelect: function(suggestion) {
             console.log(suggestion);
+            $(".request_dadata_address").val(suggestion);
         }
     });
 </script>

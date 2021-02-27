@@ -44,6 +44,7 @@ function sendApi(){
         $region__name = trim($_POST['region__name']);
         $region__id = (int) trim($_POST['region__id']);
         $region__city = trim($_POST['region__city']);
+        $suggestion = trim($_POST['request__dadata__address']);
 
 		$telout = preg_replace('/[^0-9]/', '', $request__phone);
 		$telout = substr($telout, 1);
@@ -60,11 +61,7 @@ function sendApi(){
 			'comment' => $region__name.', Город: '.$region__city.', Адрес: '.$request__address.', подъезд '.$request__entrance.' этаж '.$request__floor.', кв.'.$request__apart,
             'region_name' => $region__name,
             'region_id' => $region__id,
-            'suggestion' => [
-				'value' => '',
-				'unrestricted_value' => '',
-				'data' => [ 'postal_code' => '', 'etc' => '...' ]
-			]
+            'suggestion' => $suggestion
 		];
 
 		$post_data = json_encode($json_array);
