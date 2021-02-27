@@ -22,19 +22,19 @@ function wcCurl($queryData, $queryUrl){
 $queryUrl = 'https://api.tarifnik.ru/v1.2/make_handle';
 
 $suggestion = [
-    'value' => 'г Новосибирск, ул Виктора Уса, 12',
-    'unrestricted_value' => '630088, Новосибирская область, г Новосибирск, ул Виктора Уса, 12',
+    'value' => 'Новосибирская обл, г Новосибирск, ул Виктора Уса, 13',
+    'unrestricted_value' => '630088, Новосибирская область, г Новосибирск, ул Виктора Уса, 13',
     'data' => [ 'postal_code' => '630088', 'etc' => '...' ]
 ];
 
 $queryData = http_build_query(array(
     '_personal_token' => '56ad24efca4f548cf1624cbbd40a0965',
-    'phone' => 79820927088,
-    'campaign' => 120,//102 - Yandex, 120 - google
-    'name' => 'Иван',
-    'fam' => 'Иванов',
-    'pname' => 'Иванович',
-    'comment' => 'пробный комментарий 567',
+    'phone' => 79861328042,
+    'campaign' => 102,//102 - Yandex, 120 - google
+    'name' => 'Александр',
+    'fam' => 'Милано',
+    'pname' => 'Викторовна',
+    'comment' => 'пробный комментарий 912',
     'region_name' => 'Новосибирская область',
     'region_id' => 36,
     'suggestion' => json_encode($suggestion)

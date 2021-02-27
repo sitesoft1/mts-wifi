@@ -2,9 +2,6 @@
 
 session_start();
 
-//zakomentit
-//$_SERVER['REMOTE_ADDR'] = '87.236.16.123';
-
 if(isset($_SESSION['currentParam']) && !empty($_SESSION['currentParam'])){
     $old_session = $_SESSION['currentParam'];
     unset($_SESSION['currentParam']);
@@ -77,6 +74,14 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
     $_SESSION['currentParam'] = $config['direct'];
 }elseif(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '120'){
     $_SESSION['currentParam'] = $config['adwords'];
+}
+
+if($_SESSION['currentParam'] == 'direct'){
+    $campaign = 102;//102 - Yandex
+}elseif($_SESSION['currentParam'] == 'adwords'){
+    $campaign = 120;//120 - google
+}else{
+    $campaign = 102;//102 - Yandex
 }
 ?>
 <!DOCTYPE html>
@@ -365,6 +370,7 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 						<div id="request__apart">
 							<input type="hidden" name="region__page" id="region_page">
                             <input type="hidden" name="region__id" class="region_id">
+                            <input type="hidden" name="campaign__id" value="<?php echo $campaign; ?>" class="campaign_id">
                             <input type="hidden" name="region__name" class="region_name">
                             <input type="hidden" name="region__city" class="region_city">
 							<div class="request__row_third hidden__office">
@@ -494,6 +500,7 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 			<div class="request__checkbox">
 				<input type="hidden" name="region__request" id="region_request">
                 <input type="hidden" name="region__id" class="region_id">
+                <input type="hidden" name="campaign__id" value="<?php echo $campaign; ?>" class="campaign_id">
                 <input type="hidden" name="region__name" class="region_name">
                 <input type="hidden" name="region__city" class="region_city">
 				<label for="request_apart" class="request__label_chek">
@@ -557,6 +564,7 @@ if(!empty($_GET['utm_company_id']) && $_GET['utm_company_id'] == '102'){
 			<div class="request__checkbox">
 				<input type="hidden" name="region__consult" id="region_consult">
                 <input type="hidden" name="region__id" class="region_id">
+                <input type="hidden" name="campaign__id" value="<?php echo $campaign; ?>" class="campaign_id">
                 <input type="hidden" name="region__name" class="region_name">
                 <input type="hidden" name="region__city" class="region_city">
 				<label for="popup__consapart">
@@ -1105,7 +1113,6 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                 data:o,
                 dataType:"json",
                 success:function(t){
-                    
                     $('.request__form').removeClass('active');
                     var e;
                     /*console.log(t),*/
