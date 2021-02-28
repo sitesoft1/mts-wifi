@@ -637,14 +637,44 @@ if($_SESSION['currentParam'] == 'direct'){
 <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/css/suggestions.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@20.3.0/dist/js/jquery.suggestions.min.js"></script>
 <script>
+    var dadata_token = "7225ec19a2a62bfc433f02c0fb6867ff800848a3";
+    function suggest(query) {
+        var serviceUrl = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+        var request = {
+            "query": query
+        };
+        var params = {
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+                "Authorization": "Token " + dadata_token
+            },
+            async: false,
+            data: JSON.stringify(request)
+        }
+        return $.ajax(serviceUrl, params);
+    }
+    
     $(".request_address").suggestions({
-        token: "7225ec19a2a62bfc433f02c0fb6867ff800848a3",
+        token: dadata_token,
         type: "ADDRESS",
         /* Вызывается, когда пользователь выбирает одну из подсказок */
         onSelect: function(suggestion) {
             console.log(suggestion);
-            $(".request_dadata_address").val(suggestion);
+            var json_suggestion = JSON.stringify(suggestion);
+            $(".request_dadata_address").val(json_suggestion);
+        },
+        /* Вызывается, если пользователь не выбрал ни одной подсказки */
+        /*
+        onSelectNothing: function() {
+            var input_addres = $(".request_address").val();
+            var promise = suggest(input_addres);
+            promise.done(function(response) {
+                    var json_all_suggestions = JSON.stringify(response.suggestions[0]);
+                    $(".request_dadata_address").val(json_all_suggestions);
+                });
         }
+        */
     });
 </script>
 
@@ -963,6 +993,7 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
     e[t].style.backgroundImage="url("+a+")"}var r=window.navigator.userAgent.match(/Firefox\/([0-9]+)\./),n=r?parseInt(r[1]):0;
     if(canUseWebp()||65<=n)for(var o=document.querySelectorAll("[data-bg-webp]"),t=0;t<o.length;t++){var g=o[t].getAttribute("data-bg-webp");
         o[t].style.backgroundImage="url("+g+")"}};
+
     $(document).ready(function(){
         $(".all__ok").css("display","flex").hide(),
         $(".check__wrap").click(function(){
@@ -1128,6 +1159,24 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
         
         $("#request__submit").click(function(){
             
+            var dadata_address = $("#form1r .request_dadata_address").val();
+            console.log(dadata_address.length);
+            
+            if(dadata_address.length == 0){
+                var input_addres = $("#form1r .request_address").val();
+                console.log(input_addres);
+                //if(input_addres.length >= 1){
+                    var promise = suggest(input_addres);
+                    console.log();
+                    promise.done(function(response) {
+                        console.log(response.suggestions[0]);
+                        var json_suggestions = JSON.stringify(response.suggestions[0]);
+                        console.log(json_suggestions);
+                        $("#form1r .request_dadata_address").val(json_suggestions);
+                    });
+                //}
+            }
+            
             $('.request__form').addClass('active');
             var t=document.location.protocol+"//"+document.location.host,
             e=$(".header__info__location__title").html();
@@ -1140,6 +1189,7 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                 url:t+"/wp-content/themes/red/mail1r.php?action=mail1r",
                 data:o,
                 dataType:"json",
+                async: false,
                 success:function(t){
                     $('.request__form').removeClass('active');
                     var e;
