@@ -510,7 +510,7 @@ if($_SESSION['currentParam'] == 'direct'){
                 <input type="hidden" name="region__city" class="region_city">
 				<label for="request_apart" class="request__label_chek">
 					<span class="check__request active">
-						<input type="checkbox" name="request__apart" id="request_apart" class="check__box" checked="checked">
+						<input type="checkbox" name="request__in__apart" id="request_apart" class="check__box" checked="checked">
 						<span class="check__title">В квартиру</span>
 					</span>
 				</label>
@@ -526,22 +526,22 @@ if($_SESSION['currentParam'] == 'direct'){
 					<input type="text" name="popup__req_connect" id="popup__reqconnect" value="" readonly>
 				</label>
 				<label for="popup__req_surname" id="label__reqname" class="all__label hidden__popup_apart">
-					<input type="text" name="popup__req__surname" id="popup__req_surname" placeholder="Ваша фамилия">
+					<input type="text" name="request__surname" id="popup__req_surname" placeholder="Ваша фамилия">
 				</label>
 				<label for="popup__reqname" id="label__reqname" class="all__label hidden__popup_apart">
-					<input type="text" name="popup__req_name" id="popup__reqname" placeholder="Ваше имя">
+					<input type="text" name="request__name" id="popup__reqname" placeholder="Ваше имя">
 				</label>
 				<label for="popup__req_middlename" id="label__reqname" class="all__label hidden__popup_apart">
-					<input type="text" name="popup__req_middle_name" id="popup__req_middlename" placeholder="Ваша фамилия">
+					<input type="text" name="request__middle_name" id="popup__req_middlename" placeholder="Ваше отчество">
 				</label>
 
                 <label for="popup__reqaddress" id="label__reqaddress" class="all__label__dadata hidden__popup_apart">
-                    <input type="text" name="popup__req_address" id="popup__reqaddress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
+                    <input type="text" name="request__address" id="popup__reqaddress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
                     <input type="hidden" name="request__dadata__address" class="request_dadata_address">
                 </label>
                 
 				<label for="popup__reqphone" id="label__reqphone" class="all__label hidden__popup_apart">
-					<input type="text" name="popup__req_phone" id="popup__reqphone" placeholder="Ваш телефон*">
+					<input type="text" name="request__phone" id="popup__reqphone" placeholder="Ваш телефон*">
 				</label>
 				
 				<p class="popup__request_label hidden__popup_apart"><?php echo get_field('popup__request__warning_text'); ?></p>
@@ -550,7 +550,8 @@ if($_SESSION['currentParam'] == 'direct'){
 				<a href="tel:<?php echo $strMts; ?>" onclick="return gtag_report_conversion('tel:<?php echo $strMts; ?>');" class="popup__request_telephone hidden__popup_office"><?php echo $mtsFull; ?></a>
 			</div>
 		</form>
-		<button id="popup__request_submit" class="hidden__popup_apart" onclick="return gtag_report_conversion('Request');">Отправить</button>
+		<!--<button id="popup__request_submit" class="hidden__popup_apart" onclick="return gtag_report_conversion('Request');">Отправить</button>-->
+		<button id="popup__request_submit" class="hidden__popup_apart">Отправить</button>
 		<div class="popup_req__ok all__ok"><?php echo get_field('sent_ok__popreq'); ?></div>
 	</div>
 </div>
@@ -597,22 +598,22 @@ if($_SESSION['currentParam'] == 'direct'){
 			</div>
 			<div class="popup__consult_inputs">
 				<label for="popup__consultsurname" class="all__label hidden__consul_office">
-					<input type="text" name="popup__consult_surname" id="popup__consultsurname" class="" placeholder="Ваша фамилия">
+					<input type="text" name="request__surname" id="popup__consultsurname" class="" placeholder="Ваша фамилия">
 				</label>
 				<label for="popup__consultname" class="all__label hidden__consul_office">
-					<input type="text" name="popup__consult_name" id="popup__consultname" class="" placeholder="Ваше имя">
+					<input type="text" name="request__name" id="popup__consultname" class="" placeholder="Ваше имя">
 				</label>
 				<label for="popup__consultmiddlename" class="all__label hidden__consul_office">
-					<input type="text" name="popup__consult_middle_name" id="popup__consultmiddlename" class="" placeholder="Ваше отчество">
+					<input type="text" name="request__middle_name" id="popup__consultmiddlename" class="" placeholder="Ваше отчество">
 				</label>
 
                 <label for="popup__consuladdress" class="all__label__dadata hidden__consul_other">
-                    <input type="text" name="popup__consultaddress" id="popup__consuladdress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
+                    <input type="text" name="request__address" id="popup__consuladdress" class="request_address" placeholder="Адрес, по которому необходимо произвести подключение">
                     <input type="hidden" name="request__dadata__address" class="request_dadata_address">
                 </label>
                 
 				<label for="popup__consultphone" class="all__label hidden__consul_office">
-					<input type="text" name="popup__consult_phone" id="popup__consultphone" class="" placeholder="Ваш телефон*">
+					<input type="text" name="request__phone" id="popup__consultphone" class="" placeholder="Ваш телефон*">
 				</label>
 				
 			</div>
@@ -1229,25 +1230,41 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
             
             $("body").on("click",".tariff__connect",function(){
                 var t=$(this).parent(".tariff__grid_column").children(".tariff__grid_title").html();
-            $("#popup__reqconnect").attr("value",t)}),$("#popup__request_submit").click(function(){
+                
+            $("#popup__reqconnect").attr("value",t)}),
+            $("#popup__request_submit").click(function(){
+
+                var dadata_address = $("#form3r .request_dadata_address").val();
+                if(dadata_address.length == 0){
+                    var input_addres = $("#form3r .request_address").val();
+                    if(input_addres.length >= 1){
+                        var promise = suggest(input_addres);
+                        promise.done(function(response) {
+                            var json_suggestions = JSON.stringify(response.suggestions[0]);
+                            $("#form3r .request_dadata_address").val(json_suggestions);
+                        });
+                    }
+                }
+                
                 $('#popup__request_wrap').addClass('active');
                 var t=document.location.protocol+"//"+document.location.host,
                     e=$(".header__info__location__title").html();
                 $("#region_request").attr("value",e);
                 var o=$("#form3r").serialize();
                 /*console.log(o),*/
-            $.ajax({method:"POST",url:t+"/wp-content/themes/red/mail3r.php?action=mail3r",
+            $.ajax({method:"POST",url:t+"/wp-content/themes/red/mail1r.php?action=mail3r",
                 data:o,
                 dataType:"json",
                 success:function(t){
+                    console.log(t);
                 $('#popup__request_wrap').removeClass('active');
                 var e;
-                /*console.log(t),*/
                     "error"==t.status&&(e=t.description,$("input[type=text]").parent("label").removeClass("error_input"),
                         e.forEach(function(t,e,o){$("[name="+t+"]").parent("label").addClass("error_input")})),
                     "success"==t.status&&($("input[type=text]").attr("value",""),
                         $(".popup_req__ok").show(),
                         setTimeout(function(){$(".popup_req__ok").fadeOut()},2e3))}})});
+        
 });
 	var isget=document.querySelectorAll(".header__info_location .header__info__location__title")[0].getAttribute("tab-city");
 	listCity(isget,'starting');

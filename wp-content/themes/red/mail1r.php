@@ -31,27 +31,51 @@ function sendApi(){
 		$status = true;
 		$url = 'https://api.tarifnik.ru/v1.2/make_handle';
 
-		$request__surname = trim($_POST['request__surname']);
-		$request__middle_name = trim($_POST['request__middle_name']);
-		$request__name = trim($_POST['request__name']);
+		$request__surname = $_POST['request__surname'] ? trim($_POST['request__surname']) : '';
+		$request__middle_name = $_POST['request__middle_name'] ? trim($_POST['request__middle_name']) : '';
+		$request__name = $_POST['request__name'] ? trim($_POST['request__name']) : '';
 		
-		$request__phone = trim($_POST['request__phone']);
-		$request__address = trim($_POST['request__address']);
+		$request__phone = $_POST['request__phone'] ? trim($_POST['request__phone']) : '';
+		$request__address = $_POST['request__address'] ? trim($_POST['request__address']) : '';
+    
+        $popup__req_connect = $_POST['popup__req_connect'] ? trim($_POST['popup__req_connect']) : '';
+		$request__entrance = $_POST['request__entrance'] ? trim($_POST['request__entrance']) : '';
+		$request__floor = $_POST['request__floor'] ? trim($_POST['request__floor']) : '';
+		$request__apart = $_POST['request__apart'] ? trim($_POST['request__apart']) : '';
 		
-		$request__entrance = trim($_POST['request__entrance']);
-		$request__floor = trim($_POST['request__floor']);
-		$request__apart = trim($_POST['request__apart']);
-		
-		$campaign__id = (int) $_POST['campaign__id'];
-        $region__name = trim($_POST['region__name']);
-        $region__id = (int) trim($_POST['region__id']);
-        $region__city = trim($_POST['region__city']);
-        $suggestion = trim($_POST['request__dadata__address']);
+		$campaign__id = $_POST['campaign__id'] ? (int) $_POST['campaign__id'] : 102;
+        $region__name = $_POST['region__name'] ? trim($_POST['region__name']) : '';
+        $region__id = $_POST['region__id'] ? (int) trim($_POST['region__id']) : '';
+        $region__city = $_POST['region__city'] ? trim($_POST['region__city']) : '';
+        $suggestion = $_POST['request__dadata__address'] ? trim($_POST['request__dadata__address']) : '';
 
 		$telout = preg_replace('/[^0-9]/', '', $request__phone);
 		$telout = substr($telout, 1);
 		$telout = '7'.$telout;
 		$telout = intval($telout);
+		
+		$comment = '';
+		if(!empty($popup__req_connect)){
+            $comment .= ' Тариф: '.$popup__req_connect.', ';
+        }
+        if(!empty($region__name)){
+            $comment .= $region__name;
+        }
+        if(!empty($region__city)){
+            $comment .= ', Город: '.$region__city;
+        }
+        if(!empty($request__address)){
+            $comment .= ', Адрес: '.$request__address;
+        }
+        if(!empty($request__entrance)){
+            $comment .= ', подъезд '.$request__entrance;
+        }
+        if(!empty($request__floor)){
+            $comment .= ', этаж '.$request__floor;
+        }
+        if(!empty($request__apart)){
+            $comment .= ', кв.'.$request__apart;
+        }
 
 		$json_array = [
             '_personal_token' => '56ad24efca4f548cf1624cbbd40a0965',
@@ -60,11 +84,12 @@ function sendApi(){
 			'name' => $request__name,
 			'fam' => $request__surname,
 			'pname' => $request__middle_name,
-			'comment' => $region__name.', Город: '.$region__city.', Адрес: '.$request__address.', подъезд '.$request__entrance.' этаж '.$request__floor.', кв.'.$request__apart,
+			'comment' => $comment,
             'region_name' => $region__name,
             'region_id' => $region__id,
             'suggestion' => $suggestion
 		];
+  
 
 		$post_data = json_encode($json_array);
 
@@ -168,6 +193,9 @@ function json_noerror($noerror, $desc) {
     $region__city = trim($_POST['region__city']);
     
 	$request__address = trim($_POST['request__address']);
+    
+    $popup__req_connect = trim($_POST['popup__req_connect']);
+    
 	$request__entrance = trim($_POST['request__entrance']);
 	$request__floor = trim($_POST['request__floor']);
 	$request__apart = trim($_POST['request__apart']);
@@ -183,6 +211,10 @@ function json_noerror($noerror, $desc) {
 		<tr style="margin-bottom:10px;background:#E21E26;">
 			<td style="padding: 20px 25px;text-transform:uppercase;font-family:arial;vertical-align: middle;text-align:right;color:#ffffff;"><b>Дата и время:</b></td>
 			<td style="padding: 10px 15px;font-family:arial;vertical-align: middle;text-align:center;color:#ffffff;">' . $request_data . '/' . $request_time . '</td>
+		</tr>
+		<tr style="margin-bottom:10px;background:#E21E26;">
+			<td style="padding: 20px 25px;text-transform:uppercase;font-family:arial;vertical-align: middle;text-align:right;color:#ffffff;"><b>Тариф:</b></td>
+			<td style="padding: 10px 15px;font-family:arial;vertical-align: middle;text-align:center;color:#ffffff;">' . $popup__req_connect . '</td>
 		</tr>
 		<tr style="margin-bottom:10px;background:#E21E26;">
 			<td style="padding: 20px 25px;text-transform:uppercase;font-family:arial;vertical-align: middle;text-align:right;color:#ffffff!important;text-decoration:none;"><b>Фамилия:</b></td>
