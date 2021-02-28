@@ -660,21 +660,9 @@ if($_SESSION['currentParam'] == 'direct'){
         type: "ADDRESS",
         /* Вызывается, когда пользователь выбирает одну из подсказок */
         onSelect: function(suggestion) {
-            console.log(suggestion);
             var json_suggestion = JSON.stringify(suggestion);
             $(".request_dadata_address").val(json_suggestion);
-        },
-        /* Вызывается, если пользователь не выбрал ни одной подсказки */
-        /*
-        onSelectNothing: function() {
-            var input_addres = $(".request_address").val();
-            var promise = suggest(input_addres);
-            promise.done(function(response) {
-                    var json_all_suggestions = JSON.stringify(response.suggestions[0]);
-                    $(".request_dadata_address").val(json_all_suggestions);
-                });
         }
-        */
     });
 </script>
 
@@ -1160,21 +1148,15 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
         $("#request__submit").click(function(){
             
             var dadata_address = $("#form1r .request_dadata_address").val();
-            console.log(dadata_address.length);
-            
             if(dadata_address.length == 0){
                 var input_addres = $("#form1r .request_address").val();
-                console.log(input_addres);
-                //if(input_addres.length >= 1){
+                if(input_addres.length >= 1){
                     var promise = suggest(input_addres);
-                    console.log();
                     promise.done(function(response) {
-                        console.log(response.suggestions[0]);
                         var json_suggestions = JSON.stringify(response.suggestions[0]);
-                        console.log(json_suggestions);
                         $("#form1r .request_dadata_address").val(json_suggestions);
                     });
-                //}
+                }
             }
             
             $('.request__form').addClass('active');
@@ -1207,7 +1189,17 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
             
             $("#popup__consult_submit").click(function(){
 
-               // console.log('popup__consult_submit click!!!');
+                var dadata_address = $("#form2r .request_dadata_address").val();
+                if(dadata_address.length == 0){
+                    var input_addres = $("#form2r .request_address").val();
+                    if(input_addres.length >= 1){
+                        var promise = suggest(input_addres);
+                        promise.done(function(response) {
+                            var json_suggestions = JSON.stringify(response.suggestions[0]);
+                            $("#form2r .request_dadata_address").val(json_suggestions);
+                        });
+                    }
+                }
                 
                 $('#popup__consult_wrap').addClass('active');
                 var t=document.location.protocol+"//"+document.location.host,
@@ -1217,7 +1209,7 @@ for(var e=document.querySelectorAll("[data-bg]"),t=0;t<e.length;t++){
                 /*console.log(o),*/
                 $.ajax({
                     method:"POST",
-                    url:t+"/wp-content/themes/red/mail2r.php?action=mail2r",
+                    url:t+"/wp-content/themes/red/mail1r.php?action=mail2r",
                     data:o,dataType:"json",
                     success:function(t){
 

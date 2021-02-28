@@ -34,8 +34,10 @@ function sendApi(){
 		$request__surname = trim($_POST['request__surname']);
 		$request__middle_name = trim($_POST['request__middle_name']);
 		$request__name = trim($_POST['request__name']);
+		
 		$request__phone = trim($_POST['request__phone']);
 		$request__address = trim($_POST['request__address']);
+		
 		$request__entrance = trim($_POST['request__entrance']);
 		$request__floor = trim($_POST['request__floor']);
 		$request__apart = trim($_POST['request__apart']);
@@ -239,7 +241,7 @@ function answerstepone($noerror){
 }
 
 /*===== Вызовем функции отправки после проверки обязательных полей =====*/
-if (isset($_GET['action']) and $_GET['action'] == 'mail1r') {
+if (isset($_GET['action'])) {
 
 	$response = array();
 	$inputTrue = array();
